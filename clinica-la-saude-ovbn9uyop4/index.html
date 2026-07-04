@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights — Painel de Clientes</title>
+<style>
+  :root{
+    --bg:#0b0c0f; --panel:#131519; --card:#17191f; --card2:#1d2027;
+    --line:#262932; --ink:#f2f3f5; --muted:#8a8d95; --dim:#565963;
+    --accent:#ff5c39; --accent-soft:rgba(255,92,57,.14);
+    --pink:#ff2fa0; --purple:#8b5cf6;
+    --up:#2ecc8f; --down:#ff5c6c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+  body{background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
+  /* ---------- sidebar ---------- */
+  aside{width:240px;background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
+  .logo{display:flex;align-items:center;gap:10px;padding:0 8px 18px}
+  .logo .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--pink));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff}
+  .logo .t{font-weight:700;font-size:15px}
+  .logo .t small{display:block;font-weight:400;font-size:10.5px;color:var(--muted)}
+  .side-lbl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--dim);padding:12px 10px 6px;text-transform:uppercase}
+  .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;border:1px solid transparent}
+  .nav-item:hover{background:var(--card);color:var(--ink)}
+  .nav-item.active{background:var(--accent);color:#fff}
+  .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+  .nav-item .h{font-size:10.5px;font-weight:400;opacity:.75;display:block}
+  /* ---------- main ---------- */
+  main{flex:1;padding:26px 30px;max-width:1250px}
+  header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;margin-bottom:6px}
+  header h1{font-size:21px;font-weight:700}
+  header .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
+  .controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:9px;font-size:12.5px;cursor:pointer;font-weight:600}
+  .preset.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  .controls input[type=date]{border:1px solid var(--line);border-radius:9px;padding:6px 8px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:dark}
+  .range-note{width:100%;text-align:right;font-size:11.5px;color:var(--dim);margin:2px 0 14px}
+  /* ---------- cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+  .card h3 .chip{font-size:9.5px;color:var(--dim);font-weight:600;background:var(--card2);padding:2px 7px;border-radius:10px}
+  .big{font-size:34px;font-weight:800;letter-spacing:-1px;margin:10px 0 2px}
+  .big-sub{font-size:11.5px;color:var(--muted)}
+  .delta{font-size:11.5px;font-weight:700;margin-left:6px}
+  .delta.up{color:var(--up)} .delta.down{color:var(--down)} .delta.flat{color:var(--dim)}
+  .split{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:9px}
+  .split .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+  .split .row b{color:var(--ink);font-weight:700}
+  .hbar{height:6px;border-radius:4px;background:var(--card2);overflow:hidden;margin-top:4px}
+  .hbar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,var(--pink),var(--purple))}
+  .legend{display:flex;gap:14px;font-size:10.5px;color:var(--muted);margin-top:10px}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
+  /* chart */
+  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
+  .tab.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+  canvas{width:100%;height:190px;display:block;margin-top:12px}
+  /* content cards */
+  .content-head{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px}
+  .content-head h2{font-size:15px;font-weight:700}
+  select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:6px 10px;font-size:12px;font-weight:600}
+  .posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px}
+  .post{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;position:relative}
+  .post .fmt{font-size:9.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 8px;border-radius:8px;align-self:flex-start}
+  .post .cap{font-size:12px;color:var(--muted);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
+  .post .views{font-size:22px;font-weight:800}
+  .post .views small{font-size:10.5px;color:var(--dim);font-weight:600;margin-left:4px}
+  .post .meta{display:flex;gap:10px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+  .post .date{font-size:10.5px;color:var(--dim)}
+  .empty{color:var(--dim);font-size:12.5px;padding:18px;text-align:center}
+  footer{margin-top:30px;font-size:11px;color:var(--dim);line-height:1.7}
+  .tip{position:fixed;pointer-events:none;background:#000;border:1px solid var(--line);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:7px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+  .c-views{grid-column:span 4}.c-reach{grid-column:span 4}.c-inter{grid-column:span 4}
+  .c-folw{grid-column:span 4}.c-conv{grid-column:span 4}.c-perfil{grid-column:span 4}
+  .c-chart{grid-column:span 12}
+  @media(max-width:1150px){.c-views,.c-reach,.c-inter,.c-folw,.c-conv,.c-perfil{grid-column:span 6}}
+  @media(max-width:800px){
+    body{flex-direction:column}
+    aside{width:100%;height:auto;position:static;flex-direction:row;align-items:center;gap:8px;padding:12px 14px;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}
+    .logo{padding:0;margin-right:6px;flex-shrink:0}
+    .logo .t{display:none}
+    .side-lbl{display:none}
+    #navClients{display:contents}
+    .nav-item{flex-shrink:0;white-space:nowrap;padding:7px 12px}
+    .nav-item .h{display:none}
+    main{padding:18px 14px}
+    header h1{font-size:18px}
+    .big{font-size:28px}
+    .range-note{text-align:left}
+    .c-views,.c-reach,.c-inter,.c-folw,.c-conv,.c-perfil{grid-column:span 12}
+    .posts{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:480px){.posts{grid-template-columns:1fr}}
+  body.solo aside{display:none!important}
+  body.solo main{margin:0 auto}
+</style>
+</head>
+<body>
+<aside>
+  <div class="logo"><div class="mark">IG</div><div class="t">Painel Insights<small>Meta Business Suite</small></div></div>
+  <div class="side-lbl">Visão geral</div>
+  <div class="nav-item" data-cid="all"><div class="avatar" style="background:linear-gradient(135deg,#ff5c39,#8b5cf6)">Σ</div>Todos os clientes</div>
+  <div class="side-lbl">Perfis</div>
+  <div id="navClients"></div>
+</aside>
+<main>
+  <header>
+    <div><h1 id="pageTitle">Insights sobre a conta</h1><div class="sub" id="pageSub"></div></div>
+    <div class="controls">
+      <button class="preset" data-days="7">7 dias</button>
+      <button class="preset" data-days="14">14 dias</button>
+      <button class="preset" data-days="28">28 dias</button>
+      <input type="date" id="dtStart"><span style="color:var(--dim);font-size:12px">até</span><input type="date" id="dtEnd">
+    </div>
+  </header>
+  <div class="range-note" id="rangeNote"></div>
+  <div id="view"></div>
+  <footer>Fonte: Meta Business Suite (Instagram) · coletado em 03/07/2026 · dados diários disponíveis de 05/06 a 02/07/2026.<br>
+  Divisões seguidores/não-seguidores referem-se aos últimos 28 dias (o Business Suite não fornece por dia). Posts cruzados FB+IG podem ter alcance parcial.<br>
+  "Contas alcançadas" soma os valores diários — a mesma conta alcançada em dias diferentes conta mais de uma vez; o alcance único do período (mostrado pelo Business Suite) é menor.</footer>
+</main>
+<div class="tip" id="tip"></div>
+
+<script>window.SOLO_ID="las"</script>
+<script>
+const START = new Date(2026,5,5), NDAYS = 28;
+const CLIENTS = [
+ {id:"las", name:"Clinica La Saúde", handle:"@clinicalasaude", c1:"#60a5fa", c2:"#a78bfa",
+  followers:3375, gained:21, unfollows:23, conv:6, contacts:2, resp:60,
+  splitViews:[53.8,46.2], splitReach:[14.3,85.7], splitInter:[95,5],
+  daily:{views:[373,104,13,1067,318,1332,495,130,321,75,378,248,415,497,420,24,18,194,220,442,309,201,30,6,98,8,144,540],
+  reach:[200,80,7,361,95,539,250,48,180,28,64,57,231,251,155,14,5,44,38,175,47,37,6,2,55,4,58,260],
+  followers:[1,0,0,1,2,1,1,1,1,1,1,3,1,1,0,0,0,1,0,0,2,1,0,0,1,1,0,0],
+  interactions:[13,1,0,20,10,59,9,3,19,1,14,14,9,11,23,0,0,7,6,10,18,12,0,0,2,0,2,11],
+  conversations:[0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0]},
+  posts:[
+   {d:"2026-06-10",f:"Reel",cap:"Esse time de milhoeees! 💙🤍",v:1235,r:788,l:30,cm:9,s:1,sh:6},
+   {d:"2026-06-13",f:"Reel",cap:"Vaaai Brasil 🇧🇷 Time La Saúde em campo ⚽",v:360,r:228,l:22,cm:1,s:0,sh:0},
+   {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0}]}
+
+];
+const METRIC_TABS=[["views","Visualizações"],["reach","Alcance"],["interactions","Interações"],["followers","Seguidores +"],["conversations","Conversas"]];
+
+const fmt=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' mi':n>=1e4?(n/1e3).toFixed(1).replace('.',',')+' mil':n.toLocaleString('pt-BR');
+const dayDate=i=>{const d=new Date(START);d.setDate(d.getDate()+i);return d};
+const dstr=d=>d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+const iso=d=>d.toISOString().slice(0,10);
+const sum=(a,s,e)=>a.slice(s,e+1).reduce((x,y)=>x+y,0);
+const initials=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+
+const SOLO = window.SOLO_ID || null;
+if(SOLO) document.body.classList.add('solo');
+let selStart=NDAYS-7, selEnd=NDAYS-1, selClient=SOLO||"all", selMetric="views", sortMode="alto";
+
+function deltaHTML(cur,prev,hasPrev){
+  if(!hasPrev)return '';
+  if(prev===0)return cur>0?'<span class="delta up">↑ novo</span>':'<span class="delta flat">0%</span>';
+  const p=(cur-prev)/prev*100, cls=p>0.5?'up':p<-0.5?'down':'flat', ar=p>0.5?'↑':p<-0.5?'↓':'·';
+  return `<span class="delta ${cls}">${ar} ${Math.abs(p).toFixed(1).replace('.',',')}%</span>`;
+}
+function splitHTML(label,fPct,nfPct){
+  return `<div class="split">
+    <div><div class="row"><span>Seguidores</span><b>${fPct.toFixed(1).replace('.',',')}%</b></div>
+    <div class="hbar"><i style="width:${fPct}%"></i></div></div>
+    <div><div class="row"><span>Não seguidores</span><b>${nfPct.toFixed(1).replace('.',',')}%</b></div>
+    <div class="hbar"><i style="width:${nfPct}%"></i></div></div>
+  </div>`;
+}
+function statCard(cls,title,val,sub,delta,extra){
+  return `<div class="card ${cls}"><h3>${title} <span class="chip">28d</span></h3>
+    <div class="big">${val}${delta||''}</div><div class="big-sub">${sub||''}</div>${extra||''}</div>`;
+}
+
+function drawBars(canvas,values,labels,grad){
+  const dpr=window.devicePixelRatio||1,W=canvas.clientWidth,H=canvas.clientHeight||190;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,W,H);
+  const pad={l:6,r:6,t:12,b:20},max=Math.max(...values,1),n=values.length;
+  const bw=Math.min(26,(W-pad.l-pad.r)/n*0.62);
+  const x=i=>pad.l+(W-pad.l-pad.r)*(i+0.5)/n;
+  canvas._pts=[];
+  for(let i=0;i<n;i++){
+    const h=(H-pad.t-pad.b)*values[i]/max, x0=x(i)-bw/2, y0=H-pad.b-h;
+    const g=ctx.createLinearGradient(0,y0,0,H-pad.b);
+    g.addColorStop(0,grad[0]);g.addColorStop(1,grad[1]);
+    ctx.fillStyle=g;
+    ctx.beginPath();ctx.roundRect(x0,y0,bw,Math.max(h,1),4);ctx.fill();
+    canvas._pts.push({px:x(i),v:values[i],lbl:labels[i]});
+  }
+  ctx.fillStyle='#565963';ctx.font='10px Segoe UI';ctx.textAlign='center';
+  const step=Math.max(1,Math.ceil(n/10));
+  for(let i=0;i<n;i+=step)ctx.fillText(labels[i],x(i),H-5);
+}
+
+function renderNav(){
+  if(SOLO) return;
+  document.getElementById('navClients').innerHTML=CLIENTS.map(c=>`
+    <div class="nav-item ${selClient===c.id?'active':''}" data-cid="${c.id}">
+      <div class="avatar" style="background:linear-gradient(135deg,${c.c1},${c.c2})">${initials(c.name)}</div>
+      <div>${c.name}<span class="h">${c.handle}</span></div>
+    </div>`).join('');
+  document.querySelector('.nav-item[data-cid=all]').classList.toggle('active',selClient==='all');
+  document.querySelectorAll('.nav-item').forEach(el=>el.onclick=()=>{selClient=el.dataset.cid;render();});
+}
+
+function renderOverview(s,e,ps,pe,hasPrev){
+  document.getElementById('pageTitle').textContent='Todos os clientes';
+  document.getElementById('pageSub').textContent='Resumo da carteira no período selecionado';
+  const view=document.getElementById('view');
+  view.innerHTML=`<div class="grid">${CLIENTS.map(c=>{
+    const v=sum(c.daily.views,s,e), r=sum(c.daily.reach,s,e), it=sum(c.daily.interactions,s,e),
+          fg=sum(c.daily.followers,s,e), cv=sum(c.daily.conversations,s,e),
+          pv=hasPrev?sum(c.daily.views,ps,pe):0;
+    return `<div class="card" style="grid-column:span 6;cursor:pointer" data-open="${c.id}">
+      <h3><span class="avatar" style="background:linear-gradient(135deg,${c.c1},${c.c2});width:24px;height:24px;font-size:9.5px">${initials(c.name)}</span>
+      ${c.name} <span class="chip">${c.handle}</span></h3>
+      <div class="big" style="font-size:26px">${fmt(v)}<span style="font-size:12px;font-weight:600;color:var(--muted)"> visualizações</span>${deltaHTML(v,pv,hasPrev)}</div>
+      <div class="split" style="flex-direction:row;gap:18px">
+        <div class="row" style="flex-direction:column"><span>Alcance</span><b>${fmt(r)}</b></div>
+        <div class="row" style="flex-direction:column"><span>Interações</span><b>${fmt(it)}</b></div>
+        <div class="row" style="flex-direction:column"><span>Seguidores +</span><b>${fg}</b></div>
+        <div class="row" style="flex-direction:column"><span>Conversas</span><b>${cv}</b></div>
+        <div class="row" style="flex-direction:column"><span>Total seg.</span><b>${fmt(c.followers)}</b></div>
+      </div></div>`;}).join('')}</div>`;
+  view.querySelectorAll('[data-open]').forEach(el=>el.onclick=()=>{selClient=el.dataset.open;render();});
+}
+
+function renderClient(c,s,e,ps,pe,hasPrev){
+  document.getElementById('pageTitle').textContent=c.name;
+  document.getElementById('pageSub').textContent=`${c.handle} · ${fmt(c.followers)} seguidores`;
+  const v=sum(c.daily.views,s,e), r=sum(c.daily.reach,s,e), it=sum(c.daily.interactions,s,e),
+        fg=sum(c.daily.followers,s,e), cv=sum(c.daily.conversations,s,e);
+  const pv=hasPrev?sum(c.daily.views,ps,pe):0, pr=hasPrev?sum(c.daily.reach,ps,pe):0,
+        pit=hasPrev?sum(c.daily.interactions,ps,pe):0, pfg=hasPrev?sum(c.daily.followers,ps,pe):0,
+        pcv=hasPrev?sum(c.daily.conversations,ps,pe):0;
+  const tec=r?it/r*100:0;
+  const view=document.getElementById('view');
+  view.innerHTML=`<div class="grid">
+    ${statCard('c-views','Visualizações',fmt(v),'no período selecionado',deltaHTML(v,pv,hasPrev),splitHTML('v',c.splitViews[0],c.splitViews[1]))}
+    ${statCard('c-reach','Contas alcançadas',fmt(r),'alcance no período',deltaHTML(r,pr,hasPrev),splitHTML('r',c.splitReach[0],c.splitReach[1]))}
+    ${statCard('c-inter','Interações',fmt(it),'curtidas, comentários, salvamentos…',deltaHTML(it,pit,hasPrev),splitHTML('i',c.splitInter[0],c.splitInter[1]))}
+    ${statCard('c-folw','Seguidores',fmt(c.followers),`+${fg} no período · −${c.unfollows} deixaram de seguir (28d)`,deltaHTML(fg,pfg,hasPrev),'')}
+    ${statCard('c-conv','Conversas iniciadas',cv,`${c.contacts} novos contatos (28d) · taxa de resposta ${String(c.resp).replace('.',',')}%`,deltaHTML(cv,pcv,hasPrev),'')}
+    ${statCard('c-perfil','Engajamento / Alcance',tec.toFixed(1).replace('.',',')+'%','interações ÷ alcance no período','','')}
+    <div class="card c-chart">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+        <h3>Atividade diária</h3>
+        <div class="tabs">${METRIC_TABS.map(([k,l])=>`<div class="tab ${selMetric===k?'active':''}" data-m="${k}">${l}</div>`).join('')}</div>
+      </div>
+      <canvas id="chart"></canvas>
+      <div class="legend"><span><span class="dot" style="background:linear-gradient(90deg,var(--pink),var(--purple))"></span>${METRIC_TABS.find(t=>t[0]===selMetric)[1]} por dia</span></div>
+    </div>
+  </div>
+  <div class="content-head">
+    <h2>Conteúdo principal baseado em visualizações</h2>
+    <select id="sortSel">
+      <option value="alto" ${sortMode==='alto'?'selected':''}>Mais alto</option>
+      <option value="baixo" ${sortMode==='baixo'?'selected':''}>Mais baixo</option>
+      <option value="recente" ${sortMode==='recente'?'selected':''}>Mais recente</option>
+    </select>
+  </div>
+  <div class="posts" id="postsWrap"></div>`;
+
+  // gráfico
+  const labels=[];for(let i=s;i<=e;i++)labels.push(dstr(dayDate(i)));
+  drawBars(document.getElementById('chart'),c.daily[selMetric].slice(s,e+1),labels,['#ff2fa0','#8b5cf6']);
+  view.querySelectorAll('.tab').forEach(el=>el.onclick=()=>{selMetric=el.dataset.m;render();});
+
+  // posts do período
+  const d0=iso(dayDate(s)), d1=iso(dayDate(e));
+  let posts=c.posts.filter(p=>p.d>=d0&&p.d<=d1);
+  if(sortMode==='alto')posts.sort((a,b)=>b.v-a.v);
+  else if(sortMode==='baixo')posts.sort((a,b)=>a.v-b.v);
+  else posts.sort((a,b)=>b.d.localeCompare(a.d));
+  document.getElementById('postsWrap').innerHTML=posts.length?posts.map(p=>`
+    <div class="post"><span class="fmt">${p.f}</span>
+      <div class="cap">${p.cap}</div>
+      <div class="views">${fmt(p.v)}<small>views</small></div>
+      <div class="meta"><span>❤️ ${p.l}</span><span>💬 ${p.cm}</span><span>🔖 ${p.s}</span><span>↗️ ${p.sh}</span>${p.r!=null?`<span>👁 ${fmt(p.r)} alcance</span>`:'<span style="color:var(--dim)">alcance n/d*</span>'}</div>
+      <div class="date">${new Date(p.d+'T00:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}</div>
+    </div>`).join(''):'<div class="empty">Nenhum post publicado no período selecionado.</div>';
+  const ss=document.getElementById('sortSel');
+  if(ss)ss.onchange=ev=>{sortMode=ev.target.value;render();};
+}
+
+function render(){
+  const s=selStart,e=selEnd,len=e-s+1,ps=s-len,pe=s-1,hasPrev=ps>=0;
+  document.getElementById('dtStart').value=iso(dayDate(s));
+  document.getElementById('dtEnd').value=iso(dayDate(e));
+  document.getElementById('rangeNote').textContent=
+    `${dstr(dayDate(s))} – ${dstr(dayDate(e))} (${len} dia${len>1?'s':''})`+(hasPrev?` · comparando com ${dstr(dayDate(ps))} – ${dstr(dayDate(pe))}`:'');
+  document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('active',+b.dataset.days===len&&e===NDAYS-1));
+  renderNav();
+  const c=CLIENTS.find(x=>x.id===selClient);
+  if(c)renderClient(c,s,e,ps,pe,hasPrev);else renderOverview(s,e,ps,pe,hasPrev);
+}
+
+document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{const d=+b.dataset.days;selEnd=NDAYS-1;selStart=Math.max(0,NDAYS-d);render();});
+function clampIdx(d){return Math.min(NDAYS-1,Math.max(0,Math.round((d-START)/864e5)))}
+document.getElementById('dtStart').onchange=ev=>{selStart=clampIdx(new Date(ev.target.value+'T00:00:00'));if(selStart>selEnd)selStart=selEnd;render();};
+document.getElementById('dtEnd').onchange=ev=>{selEnd=clampIdx(new Date(ev.target.value+'T00:00:00'));if(selEnd<selStart)selEnd=selStart;render();};
+const dtS=document.getElementById('dtStart'),dtE=document.getElementById('dtEnd');
+dtS.min=dtE.min=iso(START);dtS.max=dtE.max=iso(dayDate(NDAYS-1));
+
+const tip=document.getElementById('tip');
+document.addEventListener('mousemove',ev=>{
+  const cv=ev.target.closest('canvas');
+  if(!cv||!cv._pts){tip.style.opacity=0;return;}
+  const rc=cv.getBoundingClientRect(),mx=ev.clientX-rc.left;
+  let best=cv._pts[0];for(const p of cv._pts)if(Math.abs(p.px-mx)<Math.abs(best.px-mx))best=p;
+  tip.textContent=`${best.lbl}: ${fmt(best.v)}`;
+  tip.style.left=(ev.clientX+12)+'px';tip.style.top=(ev.clientY-8)+'px';tip.style.opacity=1;
+});
+window.addEventListener('resize',render);
+render();
+</script>
+</body>
+</html>
