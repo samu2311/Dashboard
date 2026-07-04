@@ -97,6 +97,24 @@
   @media(max-width:480px){.posts{grid-template-columns:1fr}}
   body.solo aside{display:none!important}
   body.solo main{margin:0 auto}
+  /* ---------- calendário ---------- */
+  .calwrap{position:relative}
+  .calpop{position:absolute;right:0;top:44px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;z-index:30;box-shadow:0 12px 34px rgba(0,0,0,.55);width:294px}
+  .calhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700;font-size:13px}
+  .calhead button{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:14px}
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11.5px;text-align:center}
+  .calgrid .dow{color:var(--dim);font-weight:700;padding:4px 0;font-size:10px}
+  .cald{padding:7px 0;border-radius:7px;cursor:pointer}
+  .cald:hover{background:var(--card2)}
+  .cald.dis{color:#3a3d45;pointer-events:none}
+  .cald.inrange{background:var(--accent-soft);color:var(--accent);border-radius:0}
+  .cald.edge{background:var(--accent);color:#fff;font-weight:800}
+  .calnote{font-size:10.5px;color:var(--dim);margin-top:10px;line-height:1.5}
+  @media(max-width:800px){.calpop{position:fixed;left:14px;right:14px;top:110px;width:auto}}
+  /* ---------- stories ---------- */
+  .story-day{font-size:12.5px;font-weight:700;color:var(--muted);margin:20px 0 10px;text-transform:capitalize}
+  .post .time{font-size:10.5px;color:var(--dim);font-weight:700}
+  .note-box{margin-top:18px;font-size:11.5px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -114,14 +132,18 @@
       <button class="preset" data-days="7">7 dias</button>
       <button class="preset" data-days="14">14 dias</button>
       <button class="preset" data-days="28">28 dias</button>
-      <input type="date" id="dtStart"><span style="color:var(--dim);font-size:12px">até</span><input type="date" id="dtEnd">
+      <div class="calwrap">
+        <button class="preset" id="calBtn">📅</button>
+        <div class="calpop" id="calPop" style="display:none"></div>
+      </div>
     </div>
   </header>
   <div class="range-note" id="rangeNote"></div>
   <div id="view"></div>
   <footer>Fonte: Meta Business Suite (Instagram) · coletado em 03/07/2026 · dados diários disponíveis de 05/06 a 02/07/2026.<br>
   Divisões seguidores/não-seguidores referem-se aos últimos 28 dias (o Business Suite não fornece por dia). Posts cruzados FB+IG podem ter alcance parcial.<br>
-  "Contas alcançadas" soma os valores diários — a mesma conta alcançada em dias diferentes conta mais de uma vez; o alcance único do período (mostrado pelo Business Suite) é menor.</footer>
+  "Contas alcançadas" soma os valores diários — a mesma conta alcançada em dias diferentes conta mais de uma vez; o alcance único do período (mostrado pelo Business Suite) é menor.<br>
+  Stories: o Business Suite mantém stories por poucos dias; a aba Stories acumula o que foi coletado em cada atualização (primeira coleta: 04/07/2026).</footer>
 </main>
 <div class="tip" id="tip"></div>
 
@@ -140,10 +162,23 @@ const CLIENTS = [
   posts:[
    {d:"2026-06-10",f:"Reel",cap:"Esse time de milhoeees! 💙🤍",v:1235,r:788,l:30,cm:9,s:1,sh:6},
    {d:"2026-06-13",f:"Reel",cap:"Vaaai Brasil 🇧🇷 Time La Saúde em campo ⚽",v:360,r:228,l:22,cm:1,s:0,sh:0},
-   {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0}]}
+   {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0}],
+  stories:[
+   {dt:"2026-07-03T16:53",cap:null,v:33,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T09:54",cap:null,v:41,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T09:15",cap:"BOM DIA",v:45,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:41",cap:null,v:71,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:32",cap:null,v:67,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:32",cap:null,v:56,r:null,l:2,c:0,sh:0,i:2,k:0},
+   {dt:"2026-07-02T09:27",cap:"BOM DIA QUINTA-FEIRA",v:351,r:285,l:2,c:0,sh:1,i:3,k:0},
+   {dt:"2026-07-01T14:04",cap:null,v:81,r:null,l:1,c:0,sh:1,i:2,k:0},
+   {dt:"2026-07-01T10:49",cap:"BEM VINDO JULHOOO",v:80,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-06-29T08:52",cap:"BOM DIA",v:58,r:null,l:2,c:0,sh:0,i:2,k:0}]}
 
 ];
 const METRIC_TABS=[["views","Visualizações"],["reach","Alcance"],["interactions","Interações"],["followers","Seguidores +"],["conversations","Conversas"]];
+const CONT_METRICS=[["v","Visualizações"],["r","Alcance"],["l","Curtidas"],["cm","Comentários"],["s","Salvamentos"],["sh","Compartilhamentos"]];
+const VIEW_TABS=[["geral","Visão geral"],["conteudo","Conteúdo"],["stories","Stories"]];
 
 const fmt=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' mi':n>=1e4?(n/1e3).toFixed(1).replace('.',',')+' mil':n.toLocaleString('pt-BR');
 const dayDate=i=>{const d=new Date(START);d.setDate(d.getDate()+i);return d};
@@ -155,6 +190,7 @@ const initials=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
 const SOLO = window.SOLO_ID || null;
 if(SOLO) document.body.classList.add('solo');
 let selStart=NDAYS-7, selEnd=NDAYS-1, selClient=SOLO||"all", selMetric="views", sortMode="alto";
+let selView="geral", contMetric="v", contSort="alto", fmtFilter="all";
 
 function deltaHTML(cur,prev,hasPrev){
   if(!hasPrev)return '';
@@ -170,10 +206,15 @@ function splitHTML(label,fPct,nfPct){
     <div class="hbar"><i style="width:${nfPct}%"></i></div></div>
   </div>`;
 }
-function statCard(cls,title,val,sub,delta,extra){
-  return `<div class="card ${cls}"><h3>${title} <span class="chip">28d</span></h3>
+function statCard(cls,title,val,sub,delta,extra,chip='28d'){
+  return `<div class="card ${cls}"><h3>${title}${chip?` <span class="chip">${chip}</span>`:''}</h3>
     <div class="big">${val}${delta||''}</div><div class="big-sub">${sub||''}</div>${extra||''}</div>`;
 }
+function viewTabsHTML(c){
+  return `<div class="tabs" style="margin-bottom:16px">${VIEW_TABS.map(([k,l])=>
+    `<div class="tab vt ${selView===k?'active':''}" data-v="${k}">${l}${k==='stories'?` (${(c.stories||[]).length})`:''}</div>`).join('')}</div>`;
+}
+function wireViewTabs(view){view.querySelectorAll('.vt').forEach(el=>el.onclick=()=>{selView=el.dataset.v;render();});}
 
 function drawBars(canvas,values,labels,grad){
   const dpr=window.devicePixelRatio||1,W=canvas.clientWidth,H=canvas.clientHeight||190;
@@ -239,7 +280,7 @@ function renderClient(c,s,e,ps,pe,hasPrev){
         pcv=hasPrev?sum(c.daily.conversations,ps,pe):0;
   const tec=r?it/r*100:0;
   const view=document.getElementById('view');
-  view.innerHTML=`<div class="grid">
+  view.innerHTML=viewTabsHTML(c)+`<div class="grid">
     ${statCard('c-views','Visualizações',fmt(v),'no período selecionado',deltaHTML(v,pv,hasPrev),splitHTML('v',c.splitViews[0],c.splitViews[1]))}
     ${statCard('c-reach','Contas alcançadas',fmt(r),'alcance no período',deltaHTML(r,pr,hasPrev),splitHTML('r',c.splitReach[0],c.splitReach[1]))}
     ${statCard('c-inter','Interações',fmt(it),'curtidas, comentários, salvamentos…',deltaHTML(it,pit,hasPrev),splitHTML('i',c.splitInter[0],c.splitInter[1]))}
@@ -264,11 +305,12 @@ function renderClient(c,s,e,ps,pe,hasPrev){
     </select>
   </div>
   <div class="posts" id="postsWrap"></div>`;
+  wireViewTabs(view);
 
   // gráfico
   const labels=[];for(let i=s;i<=e;i++)labels.push(dstr(dayDate(i)));
   drawBars(document.getElementById('chart'),c.daily[selMetric].slice(s,e+1),labels,['#ff2fa0','#8b5cf6']);
-  view.querySelectorAll('.tab').forEach(el=>el.onclick=()=>{selMetric=el.dataset.m;render();});
+  view.querySelectorAll('.tab[data-m]').forEach(el=>el.onclick=()=>{selMetric=el.dataset.m;render();});
 
   // posts do período
   const d0=iso(dayDate(s)), d1=iso(dayDate(e));
@@ -287,24 +329,119 @@ function renderClient(c,s,e,ps,pe,hasPrev){
   if(ss)ss.onchange=ev=>{sortMode=ev.target.value;render();};
 }
 
+function renderConteudo(c,s,e){
+  document.getElementById('pageTitle').textContent=c.name;
+  document.getElementById('pageSub').textContent=`${c.handle} · ${fmt(c.followers)} seguidores`;
+  const view=document.getElementById('view');
+  const d0=iso(dayDate(s)), d1=iso(dayDate(e));
+  let posts=c.posts.filter(p=>p.d>=d0&&p.d<=d1);
+  if(fmtFilter!=='all')posts=posts.filter(p=>p.f===fmtFilter);
+  const val=p=>p[contMetric]==null?-1:p[contMetric];
+  if(contSort==='alto')posts.sort((a,b)=>val(b)-val(a));
+  else if(contSort==='baixo')posts.sort((a,b)=>val(a)-val(b));
+  else posts.sort((a,b)=>b.d.localeCompare(a.d));
+  const label=CONT_METRICS.find(m=>m[0]===contMetric)[1];
+  const fmts=[...new Set(c.posts.map(p=>p.f))];
+  view.innerHTML=viewTabsHTML(c)+`
+  <div class="content-head" style="margin-top:0;flex-wrap:wrap;gap:10px">
+    <h2>Conteúdo por ${label.toLowerCase()}</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select id="fmtSel"><option value="all">Todos os formatos</option>${fmts.map(f=>`<option ${fmtFilter===f?'selected':''}>${f}</option>`).join('')}</select>
+      <select id="cmSel">${CONT_METRICS.map(([k,l])=>`<option value="${k}" ${contMetric===k?'selected':''}>${l}</option>`).join('')}</select>
+      <select id="csSel">
+        <option value="alto" ${contSort==='alto'?'selected':''}>Mais alto</option>
+        <option value="baixo" ${contSort==='baixo'?'selected':''}>Mais baixo</option>
+        <option value="recente" ${contSort==='recente'?'selected':''}>Mais recente</option>
+      </select>
+    </div>
+  </div>
+  <div class="posts">${posts.length?posts.map(p=>`
+    <div class="post"><span class="fmt">${p.f}</span>
+      <div class="cap">${p.cap}</div>
+      <div class="views">${p[contMetric]==null?'n/d':fmt(p[contMetric])}<small>${label.toLowerCase()}</small></div>
+      <div class="meta"><span>▶ ${fmt(p.v)}</span><span>❤️ ${p.l}</span><span>💬 ${p.cm}</span><span>🔖 ${p.s}</span><span>↗️ ${p.sh}</span><span>👁 ${p.r!=null?fmt(p.r):'n/d'}</span></div>
+      <div class="date">${new Date(p.d+'T00:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}</div>
+    </div>`).join(''):'<div class="empty">Nenhum post no período/formato selecionado.</div>'}</div>`;
+  wireViewTabs(view);
+  document.getElementById('fmtSel').onchange=ev=>{fmtFilter=ev.target.value;render();};
+  document.getElementById('cmSel').onchange=ev=>{contMetric=ev.target.value;render();};
+  document.getElementById('csSel').onchange=ev=>{contSort=ev.target.value;render();};
+}
+
+function renderStories(c){
+  document.getElementById('pageTitle').textContent=c.name;
+  document.getElementById('pageSub').textContent=`${c.handle} · ${fmt(c.followers)} seguidores`;
+  const view=document.getElementById('view');
+  const st=(c.stories||[]).slice().sort((a,b)=>b.dt.localeCompare(a.dt));
+  const tot=k=>st.reduce((a,x)=>a+(x[k]||0),0);
+  const days=[];
+  st.forEach(x=>{const d=x.dt.slice(0,10);let g=days.find(y=>y.d===d);if(!g){g={d,items:[]};days.push(g);}g.items.push(x);});
+  const dayLabel=d=>new Date(d+'T00:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+  view.innerHTML=viewTabsHTML(c)+`
+  <div class="grid">
+    ${statCard('c-views','Stories coletados',st.length,st.length?`de ${dstr(new Date(st[st.length-1].dt))} a ${dstr(new Date(st[0].dt))}`:'','','','coletado')}
+    ${statCard('c-reach','Visualizações',fmt(tot('v')),'soma dos stories coletados','','','coletado')}
+    ${statCard('c-inter','Interações',fmt(tot('i')),`❤️ ${tot('l')} curtidas · ↗️ ${tot('sh')} compart. · 💬 ${tot('c')} respostas · 🔗 ${tot('k')} cliques`,'','','coletado')}
+  </div>
+  ${days.map(g=>`<div class="story-day">${dayLabel(g.d)}</div>
+    <div class="posts">${g.items.map(x=>`
+      <div class="post"><div style="display:flex;justify-content:space-between;align-items:center"><span class="fmt">Story</span><span class="time">${x.dt.slice(11,16)}</span></div>
+        <div class="cap">${x.cap||'(sem legenda)'}</div>
+        <div class="views">${fmt(x.v)}<small>views</small></div>
+        <div class="meta"><span>❤️ ${x.l}</span><span>💬 ${x.c}</span><span>↗️ ${x.sh}</span><span>⚡ ${x.i} inter.</span>${x.k?`<span>🔗 ${x.k} cliques</span>`:''}${x.r!=null?`<span>👁 ${fmt(x.r)}</span>`:''}</div>
+      </div>`).join('')}</div>`).join('')||'<div class="empty">Nenhum story coletado ainda.</div>'}
+  <div class="note-box">ℹ️ O Business Suite mantém stories disponíveis por poucos dias, então o painel <b>acumula</b> os stories a cada coleta — com o tempo o histórico completo se forma aqui. Esta aba mostra tudo o que já foi coletado e não é afetada pelo filtro de período.</div>`;
+  wireViewTabs(view);
+}
+
 function render(){
   const s=selStart,e=selEnd,len=e-s+1,ps=s-len,pe=s-1,hasPrev=ps>=0;
-  document.getElementById('dtStart').value=iso(dayDate(s));
-  document.getElementById('dtEnd').value=iso(dayDate(e));
+  document.getElementById('calBtn').textContent='📅 '+dstr(dayDate(s))+' – '+dstr(dayDate(e));
   document.getElementById('rangeNote').textContent=
     `${dstr(dayDate(s))} – ${dstr(dayDate(e))} (${len} dia${len>1?'s':''})`+(hasPrev?` · comparando com ${dstr(dayDate(ps))} – ${dstr(dayDate(pe))}`:'');
   document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('active',+b.dataset.days===len&&e===NDAYS-1));
   renderNav();
   const c=CLIENTS.find(x=>x.id===selClient);
-  if(c)renderClient(c,s,e,ps,pe,hasPrev);else renderOverview(s,e,ps,pe,hasPrev);
+  if(!c)renderOverview(s,e,ps,pe,hasPrev);
+  else if(selView==='conteudo')renderConteudo(c,s,e);
+  else if(selView==='stories')renderStories(c);
+  else renderClient(c,s,e,ps,pe,hasPrev);
 }
 
 document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{const d=+b.dataset.days;selEnd=NDAYS-1;selStart=Math.max(0,NDAYS-d);render();});
 function clampIdx(d){return Math.min(NDAYS-1,Math.max(0,Math.round((d-START)/864e5)))}
-document.getElementById('dtStart').onchange=ev=>{selStart=clampIdx(new Date(ev.target.value+'T00:00:00'));if(selStart>selEnd)selStart=selEnd;render();};
-document.getElementById('dtEnd').onchange=ev=>{selEnd=clampIdx(new Date(ev.target.value+'T00:00:00'));if(selEnd<selStart)selEnd=selStart;render();};
-const dtS=document.getElementById('dtStart'),dtE=document.getElementById('dtEnd');
-dtS.min=dtE.min=iso(START);dtS.max=dtE.max=iso(dayDate(NDAYS-1));
+// calendário estilo Instagram
+const calBtn=document.getElementById('calBtn'), calPop=document.getElementById('calPop');
+let calMonth=new Date(dayDate(NDAYS-1).getFullYear(),dayDate(NDAYS-1).getMonth(),1), calSel=null;
+calBtn.onclick=ev=>{ev.stopPropagation();const open=calPop.style.display!=='none';calSel=null;calPop.style.display=open?'none':'block';if(!open)drawCal();};
+document.addEventListener('click',ev=>{if(!ev.target.closest('.calwrap'))calPop.style.display='none';});
+function drawCal(){
+  const y=calMonth.getFullYear(),mo=calMonth.getMonth();
+  const monthName=calMonth.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+  const startDow=new Date(y,mo,1).getDay(), nd=new Date(y,mo+1,0).getDate();
+  const min=START,max=dayDate(NDAYS-1),selA=dayDate(selStart),selB=dayDate(selEnd);
+  let cells='';
+  for(const w of ['D','S','T','Q','Q','S','S'])cells+=`<div class="dow">${w}</div>`;
+  for(let i=0;i<startDow;i++)cells+='<div></div>';
+  for(let d=1;d<=nd;d++){
+    const dt=new Date(y,mo,d), s=iso(dt);
+    const dis=dt<min||dt>max;
+    const edge=calSel?s===iso(calSel):(s===iso(selA)||s===iso(selB));
+    const inr=!calSel&&dt>selA&&dt<selB;
+    cells+=`<div class="cald${dis?' dis':''}${edge?' edge':''}${inr?' inrange':''}" data-d="${s}">${d}</div>`;
+  }
+  calPop.innerHTML=`<div class="calhead"><button id="calPrev">‹</button><span style="text-transform:capitalize">${monthName}</span><button id="calNext">›</button></div>
+    <div class="calgrid">${cells}</div>
+    <div class="calnote">${calSel?'Agora toque na <b>data final</b>':'Toque na <b>data inicial</b> e depois na final'} · dados disponíveis de ${dstr(min)} a ${dstr(max)}</div>`;
+  document.getElementById('calPrev').onclick=ev=>{ev.stopPropagation();calMonth=new Date(y,mo-1,1);drawCal();};
+  document.getElementById('calNext').onclick=ev=>{ev.stopPropagation();calMonth=new Date(y,mo+1,1);drawCal();};
+  calPop.querySelectorAll('.cald:not(.dis)').forEach(el=>el.onclick=ev=>{
+    ev.stopPropagation();
+    const d=new Date(el.dataset.d+'T00:00:00');
+    if(!calSel){calSel=d;drawCal();}
+    else{let a=calSel,b=d;if(b<a)[a,b]=[b,a];selStart=clampIdx(a);selEnd=clampIdx(b);calSel=null;calPop.style.display='none';render();}
+  });
+}
 
 const tip=document.getElementById('tip');
 document.addEventListener('mousemove',ev=>{

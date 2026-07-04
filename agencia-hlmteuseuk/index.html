@@ -97,6 +97,24 @@
   @media(max-width:480px){.posts{grid-template-columns:1fr}}
   body.solo aside{display:none!important}
   body.solo main{margin:0 auto}
+  /* ---------- calendário ---------- */
+  .calwrap{position:relative}
+  .calpop{position:absolute;right:0;top:44px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;z-index:30;box-shadow:0 12px 34px rgba(0,0,0,.55);width:294px}
+  .calhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:700;font-size:13px}
+  .calhead button{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:14px}
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11.5px;text-align:center}
+  .calgrid .dow{color:var(--dim);font-weight:700;padding:4px 0;font-size:10px}
+  .cald{padding:7px 0;border-radius:7px;cursor:pointer}
+  .cald:hover{background:var(--card2)}
+  .cald.dis{color:#3a3d45;pointer-events:none}
+  .cald.inrange{background:var(--accent-soft);color:var(--accent);border-radius:0}
+  .cald.edge{background:var(--accent);color:#fff;font-weight:800}
+  .calnote{font-size:10.5px;color:var(--dim);margin-top:10px;line-height:1.5}
+  @media(max-width:800px){.calpop{position:fixed;left:14px;right:14px;top:110px;width:auto}}
+  /* ---------- stories ---------- */
+  .story-day{font-size:12.5px;font-weight:700;color:var(--muted);margin:20px 0 10px;text-transform:capitalize}
+  .post .time{font-size:10.5px;color:var(--dim);font-weight:700}
+  .note-box{margin-top:18px;font-size:11.5px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -114,14 +132,18 @@
       <button class="preset" data-days="7">7 dias</button>
       <button class="preset" data-days="14">14 dias</button>
       <button class="preset" data-days="28">28 dias</button>
-      <input type="date" id="dtStart"><span style="color:var(--dim);font-size:12px">até</span><input type="date" id="dtEnd">
+      <div class="calwrap">
+        <button class="preset" id="calBtn">📅</button>
+        <div class="calpop" id="calPop" style="display:none"></div>
+      </div>
     </div>
   </header>
   <div class="range-note" id="rangeNote"></div>
   <div id="view"></div>
   <footer>Fonte: Meta Business Suite (Instagram) · coletado em 03/07/2026 · dados diários disponíveis de 05/06 a 02/07/2026.<br>
   Divisões seguidores/não-seguidores referem-se aos últimos 28 dias (o Business Suite não fornece por dia). Posts cruzados FB+IG podem ter alcance parcial.<br>
-  "Contas alcançadas" soma os valores diários — a mesma conta alcançada em dias diferentes conta mais de uma vez; o alcance único do período (mostrado pelo Business Suite) é menor.</footer>
+  "Contas alcançadas" soma os valores diários — a mesma conta alcançada em dias diferentes conta mais de uma vez; o alcance único do período (mostrado pelo Business Suite) é menor.<br>
+  Stories: o Business Suite mantém stories por poucos dias; a aba Stories acumula o que foi coletado em cada atualização (primeira coleta: 04/07/2026).</footer>
 </main>
 <div class="tip" id="tip"></div>
 
@@ -142,7 +164,19 @@ const CLIENTS = [
    {d:"2026-06-19",f:"Reel",cap:"Cerveja gelada e jogo passando... O que você ainda está esperando?",v:796,r:515,l:10,cm:2,s:0,sh:0},
    {d:"2026-06-19",f:"Carrossel",cap:"Aqui o chopp já está na mesa antes do apito. E quando o Brasil marcar você vai estar no lugar certo.",v:3450,r:1386,l:21,cm:0,s:2,sh:3},
    {d:"2026-06-27",f:"Carrossel",cap:"Se tem jogo do Brasil... tem experiência completa aqui no Friends! Telão funcionando e a galera certa.",v:3260,r:null,l:11,cm:2,s:0,sh:5},
-   {d:"2026-06-29",f:"Foto",cap:"Hoje tem jogo. E aqui já é festa antes da bola rolar. Almoço servido, ambiente pronto.",v:3561,r:null,l:25,cm:1,s:0,sh:5}]},
+   {d:"2026-06-29",f:"Foto",cap:"Hoje tem jogo. E aqui já é festa antes da bola rolar. Almoço servido, ambiente pronto.",v:3561,r:null,l:25,cm:1,s:0,sh:5}],
+  stories:[
+   {dt:"2026-07-04T12:12",cap:null,v:56,r:null,l:0,c:0,sh:1,i:1,k:0},
+   {dt:"2026-07-04T12:11",cap:null,v:41,r:null,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-04T12:11",cap:null,v:96,r:null,l:1,c:0,sh:1,i:2,k:0},
+   {dt:"2026-07-04T12:11",cap:null,v:43,r:null,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:866,r:676,l:3,c:0,sh:1,i:4,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:305,r:240,l:2,c:0,sh:0,i:2,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:318,r:248,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:317,r:248,l:1,c:0,sh:3,i:4,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:308,r:254,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:324,r:256,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T11:37",cap:null,v:364,r:271,l:2,c:0,sh:0,i:2,k:0}]},
  {id:"dent", name:"Dentistas Consulta Agora", handle:"@dentistasconsultaragora", c1:"#38bdf8", c2:"#6366f1",
   followers:7958, gained:62, unfollows:52, conv:30, contacts:8, resp:77.5,
   splitViews:[45.6,54.4], splitReach:[11.6,88.4], splitInter:[89,11],
@@ -157,7 +191,18 @@ const CLIENTS = [
    {d:"2026-06-16",f:"Reel",cap:"Você sabe o que é um Plantão de Implantes? Dias especiais de atendimento.",v:593,r:431,l:10,cm:0,s:0,sh:8},
    {d:"2026-06-19",f:"Reel",cap:"Cada detalhe importa no cuidado com nossos pacientes — preparação e planejamento.",v:914,r:360,l:9,cm:0,s:0,sh:1},
    {d:"2026-06-22",f:"Carrossel",cap:"Já deixou de sorrir por vergonha? Recuperar o sorriso não é só estética.",v:735,r:428,l:7,cm:0,s:0,sh:1},
-   {d:"2026-07-02",f:"Reel",cap:"Nada melhor do que ouvir de quem viveu a transformação! Cada sorriso alinhado.",v:817,r:208,l:13,cm:1,s:0,sh:1}]},
+   {d:"2026-07-02",f:"Reel",cap:"Nada melhor do que ouvir de quem viveu a transformação! Cada sorriso alinhado.",v:817,r:208,l:13,cm:1,s:0,sh:1}],
+  stories:[
+   {dt:"2026-07-02T15:20",cap:"Quinta-feira Dia muito agitado por aqui",v:143,r:110,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T12:26",cap:null,v:152,r:106,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T11:27",cap:null,v:0,r:null,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-01T14:50",cap:"Avaliação para programação de Protocolo",v:145,r:112,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-01T13:25",cap:"IMPLANTES Turno da tarde iniciado com muito sucesso",v:192,r:125,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-01T12:45",cap:null,v:190,r:125,l:0,c:0,sh:1,i:1,k:0},
+   {dt:"2026-07-01T12:05",cap:null,v:153,r:126,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-01T11:49",cap:"Dia de implantes",v:159,r:137,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-06-29T15:02",cap:null,v:171,r:137,l:4,c:0,sh:0,i:4,k:0},
+   {dt:"2026-06-29T12:43",cap:null,v:173,r:135,l:2,c:0,sh:0,i:2,k:0}]},
  {id:"sm", name:"SM Odontologia", handle:"@sm.odonto · Divinópolis", c1:"#2ecc8f", c2:"#0ea5e9",
   followers:7960, gained:99, unfollows:56, conv:18, contacts:4, resp:25,
   splitViews:[16.2,83.8], splitReach:[3.6,96.4], splitInter:[48,52],
@@ -171,7 +216,19 @@ const CLIENTS = [
    {d:"2026-06-10",f:"Reel",cap:"Sabemos que muitas pessoas chegam com medo ou insegurança…",v:494,r:265,l:9,cm:2,s:0,sh:5},
    {d:"2026-06-13",f:"Reel",cap:"Aquiii é o brasiiiiiiil 🇧🇷 Se o hexa vem eu não sei, mas essa equipe é só sucesso.",v:1287,r:null,l:27,cm:2,s:0,sh:2},
    {d:"2026-06-17",f:"Reel",cap:"A trend é divertida… mas o propósito é sério. Esse é o time que transforma sorrisos.",v:1368,r:null,l:31,cm:3,s:0,sh:6},
-   {d:"2026-06-24",f:"Reel",cap:"Nem só de atendimentos vive a nossa rotina. 😅 Entre cuidado, risadas e boas histórias.",v:1101,r:null,l:23,cm:1,s:0,sh:3}]},
+   {d:"2026-06-24",f:"Reel",cap:"Nem só de atendimentos vive a nossa rotina. 😅 Entre cuidado, risadas e boas histórias.",v:1101,r:null,l:23,cm:1,s:0,sh:3}],
+  stories:[
+   {dt:"2026-07-03T16:09",cap:"Você ainda não conhece a SM? Nosso aniversário é o momento…",v:161,r:127,l:1,c:0,sh:1,i:2,k:0},
+   {dt:"2026-07-03T16:09",cap:"Há cinco anos criando motivos para sorrir",v:165,r:132,l:1,c:0,sh:1,i:2,k:0},
+   {dt:"2026-07-03T16:03",cap:"Uma sexta especial, recheada de cuidados e o melhor…",v:380,r:290,l:1,c:0,sh:4,i:5,k:0},
+   {dt:"2026-07-03T14:52",cap:null,v:432,r:308,l:3,c:0,sh:3,i:6,k:0},
+   {dt:"2026-07-03T09:44",cap:null,v:311,r:227,l:1,c:0,sh:2,i:3,k:0},
+   {dt:"2026-07-03T09:32",cap:null,v:855,r:627,l:1,c:0,sh:5,i:6,k:0},
+   {dt:"2026-07-03T09:32",cap:null,v:924,r:658,l:1,c:0,sh:6,i:7,k:0},
+   {dt:"2026-07-03T09:20",cap:"BOM DIA Vamos finalizar a semana ?",v:632,r:476,l:2,c:0,sh:3,i:5,k:0},
+   {dt:"2026-07-02T17:17",cap:null,v:101,r:null,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-02T14:45",cap:"O cuidado e atenção que seu sorriso merece",v:90,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:44",cap:"A melhor experiência para nossos pacientes",v:91,r:null,l:2,c:0,sh:0,i:2,k:0}]},
  {id:"las", name:"Clinica La Saúde", handle:"@clinicalasaude", c1:"#60a5fa", c2:"#a78bfa",
   followers:3375, gained:21, unfollows:23, conv:6, contacts:2, resp:60,
   splitViews:[53.8,46.2], splitReach:[14.3,85.7], splitInter:[95,5],
@@ -183,7 +240,18 @@ const CLIENTS = [
   posts:[
    {d:"2026-06-10",f:"Reel",cap:"Esse time de milhoeees! 💙🤍",v:1235,r:788,l:30,cm:9,s:1,sh:6},
    {d:"2026-06-13",f:"Reel",cap:"Vaaai Brasil 🇧🇷 Time La Saúde em campo ⚽",v:360,r:228,l:22,cm:1,s:0,sh:0},
-   {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0}]},
+   {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0}],
+  stories:[
+   {dt:"2026-07-03T16:53",cap:null,v:33,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T09:54",cap:null,v:41,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-03T09:15",cap:"BOM DIA",v:45,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:41",cap:null,v:71,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:32",cap:null,v:67,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-07-02T14:32",cap:null,v:56,r:null,l:2,c:0,sh:0,i:2,k:0},
+   {dt:"2026-07-02T09:27",cap:"BOM DIA QUINTA-FEIRA",v:351,r:285,l:2,c:0,sh:1,i:3,k:0},
+   {dt:"2026-07-01T14:04",cap:null,v:81,r:null,l:1,c:0,sh:1,i:2,k:0},
+   {dt:"2026-07-01T10:49",cap:"BEM VINDO JULHOOO",v:80,r:null,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-06-29T08:52",cap:"BOM DIA",v:58,r:null,l:2,c:0,sh:0,i:2,k:0}]},
  {id:"sbd", name:"Subway Bom Despacho", handle:"@subwaybd", c1:"#22c55e", c2:"#eab308",
   followers:4238, gained:70, unfollows:46, conv:15, contacts:13, resp:56.3,
   splitViews:[51.9,48.1], splitReach:[28.5,71.5], splitInter:[50,50],
@@ -199,7 +267,16 @@ const CLIENTS = [
    {d:"2026-06-19",f:"Foto",cap:"Será que o hexa vem? Nossos cookies têm aquele gostinho de hexaaaa ⚽🇧🇷",v:787,r:null,l:8,cm:0,s:0,sh:1},
    {d:"2026-06-21",f:"Reel",cap:"Quando o orçamento aperta, a gente se adapta 😂💸 (meme)",v:3421,r:1746,l:43,cm:2,s:1,sh:6},
    {d:"2026-06-29",f:"Reel",cap:"Não sei se o Brasil vai trazer o HEXA… mas a Subway traz o combo que acaba com a fome!",v:1674,r:null,l:31,cm:2,s:0,sh:3},
-   {d:"2026-07-02",f:"Reel",cap:"🥗 Leve no prato. Gigante no sabor. Monte a salada do seu jeito.",v:3481,r:null,l:37,cm:1,s:0,sh:6}]},
+   {d:"2026-07-02",f:"Reel",cap:"🥗 Leve no prato. Gigante no sabor. Monte a salada do seu jeito.",v:3481,r:null,l:37,cm:1,s:0,sh:6}],
+  stories:[
+   {dt:"2026-07-02T10:39",cap:null,v:161,r:138,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-01T11:09",cap:null,v:210,r:179,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-06-30T14:55",cap:null,v:263,r:210,l:0,c:0,sh:0,i:1,k:0},
+   {dt:"2026-06-29T14:27",cap:null,v:365,r:288,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-06-27T15:55",cap:null,v:524,r:395,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-06-25T16:02",cap:"Ganhador do cookie 🍪",v:295,r:202,l:1,c:0,sh:0,i:1,k:0},
+   {dt:"2026-06-25T16:01",cap:"Segunda ganhadora da salada 🥗",v:325,r:223,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-06-25T14:01",cap:"Primeiro ganhador já veio retirar sua salada !",v:491,r:357,l:4,c:0,sh:1,i:5,k:0}]},
  {id:"sit", name:"Subway Itaúna", handle:"@subwayitauna", c1:"#facc15", c2:"#22c55e",
   followers:2778, gained:41, unfollows:38, conv:8, contacts:7, resp:0,
   splitViews:[81.6,18.4], splitReach:[57.7,42.3], splitInter:[94,6],
@@ -214,9 +291,19 @@ const CLIENTS = [
    {d:"2026-06-19",f:"Reel",cap:"Fase 1: Encontrar o brigadeiro. 🎮🍫 Fase 2: Não deixar sobrar nenhum.",v:143,r:105,l:3,cm:0,s:0,sh:0},
    {d:"2026-06-21",f:"Foto",cap:"(sem legenda)",v:193,r:122,l:5,cm:0,s:0,sh:0},
    {d:"2026-06-25",f:"Reel",cap:"Da vontade ou não da? 😋🥹",v:432,r:320,l:6,cm:0,s:0,sh:0},
-   {d:"2026-06-25",f:"Foto",cap:"Leve no formato. Gigante no sabor. 🥗🤤",v:206,r:114,l:3,cm:0,s:0,sh:0}]}
+   {d:"2026-06-25",f:"Foto",cap:"Leve no formato. Gigante no sabor. 🥗🤤",v:206,r:114,l:3,cm:0,s:0,sh:0}],
+  stories:[
+   {dt:"2026-07-02T10:39",cap:null,v:146,r:127,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-07-01T11:09",cap:null,v:192,r:162,l:0,c:0,sh:1,i:1,k:0},
+   {dt:"2026-06-30T14:55",cap:null,v:257,r:210,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-06-25T12:00",cap:null,v:0,r:null,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-06-25T11:02",cap:null,v:94,r:null,l:0,c:0,sh:0,i:0,k:1},
+   {dt:"2026-06-25T11:01",cap:null,v:92,r:null,l:0,c:0,sh:0,i:0,k:0},
+   {dt:"2026-06-25T11:00",cap:null,v:93,r:null,l:0,c:0,sh:0,i:0,k:0}]}
 ];
 const METRIC_TABS=[["views","Visualizações"],["reach","Alcance"],["interactions","Interações"],["followers","Seguidores +"],["conversations","Conversas"]];
+const CONT_METRICS=[["v","Visualizações"],["r","Alcance"],["l","Curtidas"],["cm","Comentários"],["s","Salvamentos"],["sh","Compartilhamentos"]];
+const VIEW_TABS=[["geral","Visão geral"],["conteudo","Conteúdo"],["stories","Stories"]];
 
 const fmt=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' mi':n>=1e4?(n/1e3).toFixed(1).replace('.',',')+' mil':n.toLocaleString('pt-BR');
 const dayDate=i=>{const d=new Date(START);d.setDate(d.getDate()+i);return d};
@@ -228,6 +315,7 @@ const initials=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
 const SOLO = window.SOLO_ID || null;
 if(SOLO) document.body.classList.add('solo');
 let selStart=NDAYS-7, selEnd=NDAYS-1, selClient=SOLO||"all", selMetric="views", sortMode="alto";
+let selView="geral", contMetric="v", contSort="alto", fmtFilter="all";
 
 function deltaHTML(cur,prev,hasPrev){
   if(!hasPrev)return '';
@@ -243,10 +331,15 @@ function splitHTML(label,fPct,nfPct){
     <div class="hbar"><i style="width:${nfPct}%"></i></div></div>
   </div>`;
 }
-function statCard(cls,title,val,sub,delta,extra){
-  return `<div class="card ${cls}"><h3>${title} <span class="chip">28d</span></h3>
+function statCard(cls,title,val,sub,delta,extra,chip='28d'){
+  return `<div class="card ${cls}"><h3>${title}${chip?` <span class="chip">${chip}</span>`:''}</h3>
     <div class="big">${val}${delta||''}</div><div class="big-sub">${sub||''}</div>${extra||''}</div>`;
 }
+function viewTabsHTML(c){
+  return `<div class="tabs" style="margin-bottom:16px">${VIEW_TABS.map(([k,l])=>
+    `<div class="tab vt ${selView===k?'active':''}" data-v="${k}">${l}${k==='stories'?` (${(c.stories||[]).length})`:''}</div>`).join('')}</div>`;
+}
+function wireViewTabs(view){view.querySelectorAll('.vt').forEach(el=>el.onclick=()=>{selView=el.dataset.v;render();});}
 
 function drawBars(canvas,values,labels,grad){
   const dpr=window.devicePixelRatio||1,W=canvas.clientWidth,H=canvas.clientHeight||190;
@@ -312,7 +405,7 @@ function renderClient(c,s,e,ps,pe,hasPrev){
         pcv=hasPrev?sum(c.daily.conversations,ps,pe):0;
   const tec=r?it/r*100:0;
   const view=document.getElementById('view');
-  view.innerHTML=`<div class="grid">
+  view.innerHTML=viewTabsHTML(c)+`<div class="grid">
     ${statCard('c-views','Visualizações',fmt(v),'no período selecionado',deltaHTML(v,pv,hasPrev),splitHTML('v',c.splitViews[0],c.splitViews[1]))}
     ${statCard('c-reach','Contas alcançadas',fmt(r),'alcance no período',deltaHTML(r,pr,hasPrev),splitHTML('r',c.splitReach[0],c.splitReach[1]))}
     ${statCard('c-inter','Interações',fmt(it),'curtidas, comentários, salvamentos…',deltaHTML(it,pit,hasPrev),splitHTML('i',c.splitInter[0],c.splitInter[1]))}
@@ -337,11 +430,12 @@ function renderClient(c,s,e,ps,pe,hasPrev){
     </select>
   </div>
   <div class="posts" id="postsWrap"></div>`;
+  wireViewTabs(view);
 
   // gráfico
   const labels=[];for(let i=s;i<=e;i++)labels.push(dstr(dayDate(i)));
   drawBars(document.getElementById('chart'),c.daily[selMetric].slice(s,e+1),labels,['#ff2fa0','#8b5cf6']);
-  view.querySelectorAll('.tab').forEach(el=>el.onclick=()=>{selMetric=el.dataset.m;render();});
+  view.querySelectorAll('.tab[data-m]').forEach(el=>el.onclick=()=>{selMetric=el.dataset.m;render();});
 
   // posts do período
   const d0=iso(dayDate(s)), d1=iso(dayDate(e));
@@ -360,24 +454,119 @@ function renderClient(c,s,e,ps,pe,hasPrev){
   if(ss)ss.onchange=ev=>{sortMode=ev.target.value;render();};
 }
 
+function renderConteudo(c,s,e){
+  document.getElementById('pageTitle').textContent=c.name;
+  document.getElementById('pageSub').textContent=`${c.handle} · ${fmt(c.followers)} seguidores`;
+  const view=document.getElementById('view');
+  const d0=iso(dayDate(s)), d1=iso(dayDate(e));
+  let posts=c.posts.filter(p=>p.d>=d0&&p.d<=d1);
+  if(fmtFilter!=='all')posts=posts.filter(p=>p.f===fmtFilter);
+  const val=p=>p[contMetric]==null?-1:p[contMetric];
+  if(contSort==='alto')posts.sort((a,b)=>val(b)-val(a));
+  else if(contSort==='baixo')posts.sort((a,b)=>val(a)-val(b));
+  else posts.sort((a,b)=>b.d.localeCompare(a.d));
+  const label=CONT_METRICS.find(m=>m[0]===contMetric)[1];
+  const fmts=[...new Set(c.posts.map(p=>p.f))];
+  view.innerHTML=viewTabsHTML(c)+`
+  <div class="content-head" style="margin-top:0;flex-wrap:wrap;gap:10px">
+    <h2>Conteúdo por ${label.toLowerCase()}</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select id="fmtSel"><option value="all">Todos os formatos</option>${fmts.map(f=>`<option ${fmtFilter===f?'selected':''}>${f}</option>`).join('')}</select>
+      <select id="cmSel">${CONT_METRICS.map(([k,l])=>`<option value="${k}" ${contMetric===k?'selected':''}>${l}</option>`).join('')}</select>
+      <select id="csSel">
+        <option value="alto" ${contSort==='alto'?'selected':''}>Mais alto</option>
+        <option value="baixo" ${contSort==='baixo'?'selected':''}>Mais baixo</option>
+        <option value="recente" ${contSort==='recente'?'selected':''}>Mais recente</option>
+      </select>
+    </div>
+  </div>
+  <div class="posts">${posts.length?posts.map(p=>`
+    <div class="post"><span class="fmt">${p.f}</span>
+      <div class="cap">${p.cap}</div>
+      <div class="views">${p[contMetric]==null?'n/d':fmt(p[contMetric])}<small>${label.toLowerCase()}</small></div>
+      <div class="meta"><span>▶ ${fmt(p.v)}</span><span>❤️ ${p.l}</span><span>💬 ${p.cm}</span><span>🔖 ${p.s}</span><span>↗️ ${p.sh}</span><span>👁 ${p.r!=null?fmt(p.r):'n/d'}</span></div>
+      <div class="date">${new Date(p.d+'T00:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'long'})}</div>
+    </div>`).join(''):'<div class="empty">Nenhum post no período/formato selecionado.</div>'}</div>`;
+  wireViewTabs(view);
+  document.getElementById('fmtSel').onchange=ev=>{fmtFilter=ev.target.value;render();};
+  document.getElementById('cmSel').onchange=ev=>{contMetric=ev.target.value;render();};
+  document.getElementById('csSel').onchange=ev=>{contSort=ev.target.value;render();};
+}
+
+function renderStories(c){
+  document.getElementById('pageTitle').textContent=c.name;
+  document.getElementById('pageSub').textContent=`${c.handle} · ${fmt(c.followers)} seguidores`;
+  const view=document.getElementById('view');
+  const st=(c.stories||[]).slice().sort((a,b)=>b.dt.localeCompare(a.dt));
+  const tot=k=>st.reduce((a,x)=>a+(x[k]||0),0);
+  const days=[];
+  st.forEach(x=>{const d=x.dt.slice(0,10);let g=days.find(y=>y.d===d);if(!g){g={d,items:[]};days.push(g);}g.items.push(x);});
+  const dayLabel=d=>new Date(d+'T00:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'});
+  view.innerHTML=viewTabsHTML(c)+`
+  <div class="grid">
+    ${statCard('c-views','Stories coletados',st.length,st.length?`de ${dstr(new Date(st[st.length-1].dt))} a ${dstr(new Date(st[0].dt))}`:'','','','coletado')}
+    ${statCard('c-reach','Visualizações',fmt(tot('v')),'soma dos stories coletados','','','coletado')}
+    ${statCard('c-inter','Interações',fmt(tot('i')),`❤️ ${tot('l')} curtidas · ↗️ ${tot('sh')} compart. · 💬 ${tot('c')} respostas · 🔗 ${tot('k')} cliques`,'','','coletado')}
+  </div>
+  ${days.map(g=>`<div class="story-day">${dayLabel(g.d)}</div>
+    <div class="posts">${g.items.map(x=>`
+      <div class="post"><div style="display:flex;justify-content:space-between;align-items:center"><span class="fmt">Story</span><span class="time">${x.dt.slice(11,16)}</span></div>
+        <div class="cap">${x.cap||'(sem legenda)'}</div>
+        <div class="views">${fmt(x.v)}<small>views</small></div>
+        <div class="meta"><span>❤️ ${x.l}</span><span>💬 ${x.c}</span><span>↗️ ${x.sh}</span><span>⚡ ${x.i} inter.</span>${x.k?`<span>🔗 ${x.k} cliques</span>`:''}${x.r!=null?`<span>👁 ${fmt(x.r)}</span>`:''}</div>
+      </div>`).join('')}</div>`).join('')||'<div class="empty">Nenhum story coletado ainda.</div>'}
+  <div class="note-box">ℹ️ O Business Suite mantém stories disponíveis por poucos dias, então o painel <b>acumula</b> os stories a cada coleta — com o tempo o histórico completo se forma aqui. Esta aba mostra tudo o que já foi coletado e não é afetada pelo filtro de período.</div>`;
+  wireViewTabs(view);
+}
+
 function render(){
   const s=selStart,e=selEnd,len=e-s+1,ps=s-len,pe=s-1,hasPrev=ps>=0;
-  document.getElementById('dtStart').value=iso(dayDate(s));
-  document.getElementById('dtEnd').value=iso(dayDate(e));
+  document.getElementById('calBtn').textContent='📅 '+dstr(dayDate(s))+' – '+dstr(dayDate(e));
   document.getElementById('rangeNote').textContent=
     `${dstr(dayDate(s))} – ${dstr(dayDate(e))} (${len} dia${len>1?'s':''})`+(hasPrev?` · comparando com ${dstr(dayDate(ps))} – ${dstr(dayDate(pe))}`:'');
   document.querySelectorAll('.preset').forEach(b=>b.classList.toggle('active',+b.dataset.days===len&&e===NDAYS-1));
   renderNav();
   const c=CLIENTS.find(x=>x.id===selClient);
-  if(c)renderClient(c,s,e,ps,pe,hasPrev);else renderOverview(s,e,ps,pe,hasPrev);
+  if(!c)renderOverview(s,e,ps,pe,hasPrev);
+  else if(selView==='conteudo')renderConteudo(c,s,e);
+  else if(selView==='stories')renderStories(c);
+  else renderClient(c,s,e,ps,pe,hasPrev);
 }
 
 document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{const d=+b.dataset.days;selEnd=NDAYS-1;selStart=Math.max(0,NDAYS-d);render();});
 function clampIdx(d){return Math.min(NDAYS-1,Math.max(0,Math.round((d-START)/864e5)))}
-document.getElementById('dtStart').onchange=ev=>{selStart=clampIdx(new Date(ev.target.value+'T00:00:00'));if(selStart>selEnd)selStart=selEnd;render();};
-document.getElementById('dtEnd').onchange=ev=>{selEnd=clampIdx(new Date(ev.target.value+'T00:00:00'));if(selEnd<selStart)selEnd=selStart;render();};
-const dtS=document.getElementById('dtStart'),dtE=document.getElementById('dtEnd');
-dtS.min=dtE.min=iso(START);dtS.max=dtE.max=iso(dayDate(NDAYS-1));
+// calendário estilo Instagram
+const calBtn=document.getElementById('calBtn'), calPop=document.getElementById('calPop');
+let calMonth=new Date(dayDate(NDAYS-1).getFullYear(),dayDate(NDAYS-1).getMonth(),1), calSel=null;
+calBtn.onclick=ev=>{ev.stopPropagation();const open=calPop.style.display!=='none';calSel=null;calPop.style.display=open?'none':'block';if(!open)drawCal();};
+document.addEventListener('click',ev=>{if(!ev.target.closest('.calwrap'))calPop.style.display='none';});
+function drawCal(){
+  const y=calMonth.getFullYear(),mo=calMonth.getMonth();
+  const monthName=calMonth.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+  const startDow=new Date(y,mo,1).getDay(), nd=new Date(y,mo+1,0).getDate();
+  const min=START,max=dayDate(NDAYS-1),selA=dayDate(selStart),selB=dayDate(selEnd);
+  let cells='';
+  for(const w of ['D','S','T','Q','Q','S','S'])cells+=`<div class="dow">${w}</div>`;
+  for(let i=0;i<startDow;i++)cells+='<div></div>';
+  for(let d=1;d<=nd;d++){
+    const dt=new Date(y,mo,d), s=iso(dt);
+    const dis=dt<min||dt>max;
+    const edge=calSel?s===iso(calSel):(s===iso(selA)||s===iso(selB));
+    const inr=!calSel&&dt>selA&&dt<selB;
+    cells+=`<div class="cald${dis?' dis':''}${edge?' edge':''}${inr?' inrange':''}" data-d="${s}">${d}</div>`;
+  }
+  calPop.innerHTML=`<div class="calhead"><button id="calPrev">‹</button><span style="text-transform:capitalize">${monthName}</span><button id="calNext">›</button></div>
+    <div class="calgrid">${cells}</div>
+    <div class="calnote">${calSel?'Agora toque na <b>data final</b>':'Toque na <b>data inicial</b> e depois na final'} · dados disponíveis de ${dstr(min)} a ${dstr(max)}</div>`;
+  document.getElementById('calPrev').onclick=ev=>{ev.stopPropagation();calMonth=new Date(y,mo-1,1);drawCal();};
+  document.getElementById('calNext').onclick=ev=>{ev.stopPropagation();calMonth=new Date(y,mo+1,1);drawCal();};
+  calPop.querySelectorAll('.cald:not(.dis)').forEach(el=>el.onclick=ev=>{
+    ev.stopPropagation();
+    const d=new Date(el.dataset.d+'T00:00:00');
+    if(!calSel){calSel=d;drawCal();}
+    else{let a=calSel,b=d;if(b<a)[a,b]=[b,a];selStart=clampIdx(a);selEnd=clampIdx(b);calSel=null;calPop.style.display='none';render();}
+  });
+}
 
 const tip=document.getElementById('tip');
 document.addEventListener('mousemove',ev=>{
