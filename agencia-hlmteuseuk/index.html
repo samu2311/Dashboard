@@ -74,6 +74,8 @@
   .empty{color:var(--dim);font-size:12.5px;padding:18px;text-align:center}
   footer{margin-top:30px;font-size:11px;color:var(--dim);line-height:1.7}
   .tip{position:fixed;pointer-events:none;background:#000;border:1px solid var(--line);color:#fff;font-size:11.5px;padding:5px 9px;border-radius:7px;opacity:0;transition:opacity .1s;z-index:10;white-space:nowrap}
+  .ov{grid-column:span 6}
+  .card h3{flex-wrap:wrap}
   .c-views{grid-column:span 4}.c-reach{grid-column:span 4}.c-inter{grid-column:span 4}
   .c-folw{grid-column:span 4}.c-conv{grid-column:span 4}.c-perfil{grid-column:span 4}
   .c-chart{grid-column:span 12}
@@ -91,7 +93,7 @@
     header h1{font-size:18px}
     .big{font-size:28px}
     .range-note{text-align:left}
-    .c-views,.c-reach,.c-inter,.c-folw,.c-conv,.c-perfil{grid-column:span 12}
+    .c-views,.c-reach,.c-inter,.c-folw,.c-conv,.c-perfil,.ov{grid-column:span 12}
     .posts{grid-template-columns:1fr 1fr}
   }
   @media(max-width:480px){.posts{grid-template-columns:1fr}}
@@ -381,7 +383,7 @@ function renderOverview(s,e,ps,pe,hasPrev){
     const v=sum(c.daily.views,s,e), r=sum(c.daily.reach,s,e), it=sum(c.daily.interactions,s,e),
           fg=sum(c.daily.followers,s,e), cv=sum(c.daily.conversations,s,e),
           pv=hasPrev?sum(c.daily.views,ps,pe):0;
-    return `<div class="card" style="grid-column:span 6;cursor:pointer" data-open="${c.id}">
+    return `<div class="card ov" style="cursor:pointer" data-open="${c.id}">
       <h3><span class="avatar" style="background:linear-gradient(135deg,${c.c1},${c.c2});width:24px;height:24px;font-size:9.5px">${initials(c.name)}</span>
       ${c.name} <span class="chip">${c.handle}</span></h3>
       <div class="big" style="font-size:26px">${fmt(v)}<span style="font-size:12px;font-weight:600;color:var(--muted)"> visualizações</span>${deltaHTML(v,pv,hasPrev)}</div>
