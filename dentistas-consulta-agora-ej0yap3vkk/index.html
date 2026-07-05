@@ -117,6 +117,42 @@
   .story-day{font-size:12.5px;font-weight:700;color:var(--muted);margin:20px 0 10px;text-transform:capitalize}
   .post .time{font-size:10.5px;color:var(--dim);font-weight:700}
   .note-box{margin-top:18px;font-size:11.5px;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;line-height:1.6}
+  /* ---------- calendário de conteúdo ---------- */
+  .calbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+  .calbar .mlabel{font-size:15px;font-weight:800;text-transform:capitalize}
+  .weekgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+  .wday{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px;min-height:130px}
+  .wday h4{font-size:11px;color:var(--muted);text-align:center;padding:2px 0 8px;font-weight:700}
+  .wday h4 b{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;color:var(--ink)}
+  .wday h4 b.today{background:var(--accent);color:#fff}
+  .nada{color:var(--dim);text-align:center;font-size:10px;padding:10px 0}
+  .citem{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;margin-bottom:8px;cursor:pointer;font-size:11px}
+  .citem:hover{border-color:var(--accent)}
+  .citem .ct{color:var(--dim);font-size:9.5px;float:right}
+  .citem .cc{color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:4px}
+  .citem .cv{margin-top:5px;font-weight:800;font-size:12px}
+  .k{font-size:9px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:2px 7px;border-radius:7px;display:inline-block}
+  .k.story{background:rgba(255,47,160,.15);color:var(--pink)}
+  .k.reel{background:var(--accent-soft);color:var(--accent)}
+  .k.foto{background:rgba(56,189,248,.15);color:#38bdf8}
+  .k.carrossel{background:rgba(46,204,143,.15);color:var(--up)}
+  .monthgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .mdow{font-size:10px;color:var(--dim);font-weight:700;text-align:center;padding:2px 0}
+  .mday{background:var(--panel);border:1px solid var(--line);border-radius:10px;min-height:88px;padding:6px;font-size:10px;overflow:hidden}
+  .mday .dnum{font-weight:700;color:var(--muted);margin-bottom:4px}
+  .mday .dnum.tdy{color:var(--accent)}
+  .mpill{padding:4px 6px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center;gap:4px}
+  .mpill b{font-size:10px}
+  .more{color:var(--accent);cursor:pointer;font-size:9.5px;font-weight:700;margin-top:2px}
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;display:flex;align-items:center;justify-content:center;padding:18px}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:470px;width:100%;max-height:85vh;overflow-y:auto;padding:20px}
+  @media(max-width:800px){
+    .weekgrid{grid-template-columns:1fr}
+    .wday{min-height:auto}
+    .wday.empty{display:none}
+    .mday{min-height:60px;padding:4px}
+    .mpill{padding:2px 4px}.mpill .k{padding:1px 4px;font-size:7.5px}
+  }
 </style>
 </head>
 <body>
@@ -183,7 +219,7 @@ const CLIENTS = [
 ];
 const METRIC_TABS=[["views","Visualizações"],["reach","Alcance"],["interactions","Interações"],["followers","Seguidores +"],["conversations","Conversas"]];
 const CONT_METRICS=[["v","Visualizações"],["r","Alcance"],["l","Curtidas"],["cm","Comentários"],["s","Salvamentos"],["sh","Compartilhamentos"]];
-const VIEW_TABS=[["geral","Visão geral"],["conteudo","Conteúdo"],["stories","Stories"]];
+const VIEW_TABS=[["geral","Visão geral"],["conteudo","Conteúdo"],["stories","Stories"],["calendario","Calendário"]];
 
 const fmt=n=>n>=1e6?(n/1e6).toFixed(1).replace('.',',')+' mi':n>=1e4?(n/1e3).toFixed(1).replace('.',',')+' mil':n.toLocaleString('pt-BR');
 const dayDate=i=>{const d=new Date(START);d.setDate(d.getDate()+i);return d};
@@ -196,6 +232,7 @@ const SOLO = window.SOLO_ID || null;
 if(SOLO) document.body.classList.add('solo');
 let selStart=NDAYS-7, selEnd=NDAYS-1, selClient=SOLO||"all", selMetric="views", sortMode="alto";
 let selView="geral", contMetric="v", contSort="alto", fmtFilter="all";
+let calVMode="semanal", calRef=null, calFmt="all";
 
 function deltaHTML(cur,prev,hasPrev){
   if(!hasPrev)return '';
@@ -399,6 +436,108 @@ function renderStories(c){
   wireViewTabs(view);
 }
 
+function renderCalendario(c){
+  document.getElementById('pageTitle').textContent=c.name;
+  document.getElementById('pageSub').textContent=`${c.handle} · ${fmt(c.followers)} seguidores`;
+  const view=document.getElementById('view');
+  let items=[
+    ...c.posts.map(p=>({kind:p.f.toLowerCase(),grp:'feed',d:p.d,time:null,cap:p.cap,v:p.v,data:p})),
+    ...(c.stories||[]).map(x=>({kind:'story',grp:'story',d:x.dt.slice(0,10),time:x.dt.slice(11,16),cap:x.cap,v:x.v,data:x}))
+  ];
+  if(calFmt!=='all')items=items.filter(i=>i.grp===calFmt);
+  items.forEach((i,ix)=>i.mid=ix);
+  if(!calRef){
+    const ds=[...c.posts.map(p=>p.d),...(c.stories||[]).map(x=>x.dt.slice(0,10))].sort();
+    calRef=new Date((ds[ds.length-1]||iso(new Date()))+'T00:00:00');
+  }
+  const byDay={};items.forEach(i=>{(byDay[i.d]=byDay[i.d]||[]).push(i);});
+  Object.values(byDay).forEach(a=>a.sort((x,y)=>(x.time||'00').localeCompare(y.time||'00')));
+  const todayIso=iso(new Date());
+  const chip=i=>`<div class="citem" data-mid="${i.mid}">
+      <span class="k ${i.kind}">${i.kind==='story'?'Story':i.kind}</span>${i.time?`<span class="ct">${i.time}</span>`:''}
+      <div class="cc">${i.cap||'(sem legenda)'}</div>
+      <div class="cv">${fmt(i.v)} <span style="color:var(--dim);font-weight:600;font-size:9.5px">views</span></div>
+    </div>`;
+  const dowNames=['dom','seg','ter','qua','qui','sex','sáb'];
+  let bodyHTML='';
+  if(calVMode==='semanal'){
+    const start=new Date(calRef);start.setDate(start.getDate()-start.getDay());
+    let cols='';
+    for(let k=0;k<7;k++){
+      const dt=new Date(start);dt.setDate(dt.getDate()+k);const s=iso(dt);
+      const its=byDay[s]||[];
+      cols+=`<div class="wday${its.length?'':' empty'}"><h4>${dowNames[dt.getDay()]} <b class="${s===todayIso?'today':''}">${dt.getDate()}</b></h4>${its.map(chip).join('')||'<div class="nada">—</div>'}</div>`;
+    }
+    bodyHTML=`<div class="weekgrid">${cols}</div>`;
+  }else{
+    const y=calRef.getFullYear(),mo=calRef.getMonth();
+    const startDow=new Date(y,mo,1).getDay(),nd=new Date(y,mo+1,0).getDate();
+    let cells=dowNames.map(w=>`<div class="mdow">${w}</div>`).join('');
+    for(let i=0;i<startDow;i++)cells+='<div></div>';
+    for(let d=1;d<=nd;d++){
+      const s=iso(new Date(y,mo,d));const its=byDay[s]||[];
+      cells+=`<div class="mday"><div class="dnum ${s===todayIso?'tdy':''}">${d}</div>${its.slice(0,3).map(i=>`<div class="citem mpill" data-mid="${i.mid}"><span class="k ${i.kind}">${i.kind==='story'?'St':i.kind.slice(0,4)}</span><b>${fmt(i.v)}</b></div>`).join('')}${its.length>3?`<div class="more" data-week="${s}">+${its.length-3} mais</div>`:''}</div>`;
+    }
+    bodyHTML=`<div class="monthgrid">${cells}</div>`;
+  }
+  const mLabel=calVMode==='semanal'
+    ?(()=>{const st=new Date(calRef);st.setDate(st.getDate()-st.getDay());const en=new Date(st);en.setDate(en.getDate()+6);return `${dstr(st)} – ${dstr(en)}`;})()+' · '+calRef.toLocaleDateString('pt-BR',{month:'long',year:'numeric'})
+    :calRef.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});
+  view.innerHTML=viewTabsHTML(c)+`
+  <div class="calbar">
+    <div class="mlabel">${mLabel}</div>
+    <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+      <button class="preset" id="cnPrev">‹</button>
+      <button class="preset" id="cnHoje">Hoje</button>
+      <button class="preset" id="cnNext">›</button>
+      <button class="preset ${calVMode==='semanal'?'active':''}" id="cnSem">Semanal</button>
+      <button class="preset ${calVMode==='mensal'?'active':''}" id="cnMes">Mensal</button>
+      <select id="cnFmt">
+        <option value="all" ${calFmt==='all'?'selected':''}>Feed + Stories</option>
+        <option value="feed" ${calFmt==='feed'?'selected':''}>Só Feed</option>
+        <option value="story" ${calFmt==='story'?'selected':''}>Só Stories</option>
+      </select>
+    </div>
+  </div>
+  ${bodyHTML}
+  <div class="note-box">💡 Toque em um conteúdo para abrir legenda e insights. Posts do feed existem desde 05/06; stories a partir de 25/06 (início da coleta acumulada). O calendário não é afetado pelo filtro de período do topo.</div>`;
+  wireViewTabs(view);
+  document.getElementById('cnPrev').onclick=()=>{if(calVMode==='semanal')calRef.setDate(calRef.getDate()-7);else calRef=new Date(calRef.getFullYear(),calRef.getMonth()-1,1);render();};
+  document.getElementById('cnNext').onclick=()=>{if(calVMode==='semanal')calRef.setDate(calRef.getDate()+7);else calRef=new Date(calRef.getFullYear(),calRef.getMonth()+1,1);render();};
+  document.getElementById('cnHoje').onclick=()=>{calRef=new Date();render();};
+  document.getElementById('cnSem').onclick=()=>{calVMode='semanal';render();};
+  document.getElementById('cnMes').onclick=()=>{calVMode='mensal';render();};
+  document.getElementById('cnFmt').onchange=ev=>{calFmt=ev.target.value;render();};
+  view.querySelectorAll('[data-mid]').forEach(el=>el.onclick=()=>openContentModal(items[+el.dataset.mid]));
+  view.querySelectorAll('.more').forEach(el=>el.onclick=()=>{calVMode='semanal';calRef=new Date(el.dataset.week+'T00:00:00');render();});
+}
+
+function openContentModal(i){
+  const old=document.getElementById('cmodal');if(old)old.remove();
+  const isS=i.kind==='story', d=i.data;
+  const rows=isS
+    ?[['Visualizações',fmt(d.v)],['Alcance',d.r!=null?fmt(d.r):'n/d'],['Curtidas',d.l],['Respostas',d.c],['Compartilhamentos',d.sh],['Interações líquidas',d.i],['Cliques no link',d.k]]
+    :[['Visualizações',fmt(d.v)],['Alcance',d.r!=null?fmt(d.r):'n/d*'],['Curtidas',d.l],['Comentários',d.cm],['Salvamentos',d.s],['Compartilhamentos',d.sh]];
+  if(!isS&&d.r)rows.push(['Engaj. / Alcance',(((d.l+d.cm+d.s+d.sh)/d.r)*100).toFixed(1).replace('.',',')+'%']);
+  const dtLabel=new Date(i.d+'T00:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})+(i.time?` · ${i.time}`:'');
+  const bg=document.createElement('div');bg.className='modal-bg';bg.id='cmodal';
+  bg.innerHTML=`<div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span class="k ${i.kind}" style="font-size:10px;padding:4px 10px">${isS?'Story':i.kind}</span>
+      <button id="cmClose" style="background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:8px;width:30px;height:30px;cursor:pointer">✕</button>
+    </div>
+    <div style="font-size:12px;color:var(--muted);text-transform:capitalize;margin-bottom:10px">${dtLabel}</div>
+    <div style="font-size:13.5px;line-height:1.55;margin-bottom:16px">${i.cap||'<span style="color:var(--dim)">(sem legenda)</span>'}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      ${rows.map(([k,v])=>`<div style="background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px"><div style="font-size:10.5px;color:var(--muted)">${k}</div><div style="font-size:18px;font-weight:800">${v}</div></div>`).join('')}
+    </div>
+    ${!isS&&d.r==null?'<div style="font-size:10.5px;color:var(--dim);margin-top:10px">* alcance não disponível para posts cruzados FB+IG</div>':''}
+  </div>`;
+  document.body.appendChild(bg);
+  bg.onclick=ev=>{if(ev.target===bg)bg.remove();};
+  document.getElementById('cmClose').onclick=()=>bg.remove();
+}
+
 function render(){
   const s=selStart,e=selEnd,len=e-s+1,ps=s-len,pe=s-1,hasPrev=ps>=0;
   document.getElementById('calBtn').textContent='📅 '+dstr(dayDate(s))+' – '+dstr(dayDate(e));
@@ -410,6 +549,7 @@ function render(){
   if(!c)renderOverview(s,e,ps,pe,hasPrev);
   else if(selView==='conteudo')renderConteudo(c,s,e);
   else if(selView==='stories')renderStories(c);
+  else if(selView==='calendario')renderCalendario(c);
   else renderClient(c,s,e,ps,pe,hasPrev);
 }
 
