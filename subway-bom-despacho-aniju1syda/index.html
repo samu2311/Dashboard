@@ -192,18 +192,18 @@
 
 <script>window.SOLO_ID="sbd"</script>
 <script>
-const START = new Date(2026,5,5), NDAYS = 28;
+const START = new Date(2026,5,5), NDAYS = 33;
 const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"sbd", name:"Subway Bom Despacho", handle:"@subwaybd", c1:"#22c55e", c2:"#eab308",
-  followers:4238, gained:70, unfollows:46, conv:15, contacts:13, resp:56.3,
-  splitViews:[51.9,48.1], splitReach:[28.5,71.5], splitInter:[50,50],
-  daily:{views:[396,279,305,821,257,7253,1302,527,223,151,828,557,3013,1777,1684,990,2825,1450,949,1416,1424,717,665,210,1904,648,384,3136],
-  reach:[108,138,180,377,141,3428,542,259,107,74,197,221,1001,837,449,228,1444,386,204,238,281,237,353,123,807,373,214,1803],
-  followers:[4,2,2,2,2,7,2,2,1,1,1,4,2,2,6,1,4,2,1,1,3,3,0,1,5,5,4,0],
-  interactions:[1,1,2,7,0,150,18,13,1,2,9,0,49,18,31,8,51,6,6,7,7,3,4,4,40,4,6,45],
-  conversations:[0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,2,0,0,0,2,4,0,1,0,1,2,0,0]},
+  followers:4235, gained:62, unfollows:52, conv:16, contacts:14, resp:52.9,
+  splitViews:[49.3,50.7], splitReach:[26.1,73.9], splitInter:[48,52],
+  daily:{views:[396,279,305,821,257,7253,1302,527,223,151,828,557,3013,1777,1684,990,2825,1450,949,1416,1424,717,665,210,1904,648,384,3136,1221,557,279,905,615],
+  reach:[108,138,180,377,141,3428,542,259,107,74,197,221,1001,837,449,228,1444,386,204,238,281,237,353,123,807,373,214,1803,754,317,199,378,390],
+  followers:[4,2,2,2,2,7,2,2,1,1,1,4,2,2,6,1,4,2,1,1,3,3,1,1,5,5,4,0,1,1,0,2,0],
+  interactions:[1,1,2,7,0,150,18,13,1,2,9,0,49,18,31,8,51,6,6,7,7,3,4,4,40,4,6,45,18,8,5,3,7],
+  conversations:[0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,2,0,0,0,2,4,0,1,0,1,2,0,0,0,0,0,1,0]},
   posts:[
    {d:"2026-06-08",f:"Reel",cap:"Eu tentando não pedir… Eu vendo isso: oh my God… perfect 🤤",v:790,r:null,l:4,cm:0,s:0,sh:1},
    {d:"2026-06-10",f:"Reel",cap:"Novo golpe descoberto 👀🚨 O golpe do cadarço ‼️",v:9043,r:null,l:115,cm:10,s:3,sh:19,img:"sbd_p2.jpg",u:"https://www.instagram.com/reel/DZaLFVVA7Br/"},
@@ -213,6 +213,9 @@ const CLIENTS = [
    {d:"2026-06-29",f:"Reel",cap:"Não sei se o Brasil vai trazer o HEXA… mas a Subway traz o combo que acaba com a fome!",v:1674,r:null,l:31,cm:2,s:0,sh:3,img:"sbd_p6.jpg",u:"https://www.instagram.com/reel/DaLZlLSR3Hp/"},
    {d:"2026-07-02",f:"Reel",cap:"🥗 Leve no prato. Gigante no sabor. Monte a salada do seu jeito.",v:3481,r:null,l:37,cm:1,s:0,sh:6,img:"sbd_p7.jpg",u:"https://www.instagram.com/reel/DaSx5sBANIt/"}],
   stories:[
+   {dt:"2026-07-07T17:12",cap:null,v:168,r:148,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260707-1712_0.jpg"},
+   {dt:"2026-07-06T15:15",cap:null,v:227,r:186,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260706-1515_0.jpg"},
+   {dt:"2026-07-06T12:39",cap:null,v:218,r:186,l:0,c:0,sh:0,i:1,k:0,img:"sbd_s_20260706-1239_0.jpg"},
    {dt:"2026-07-02T10:39",cap:null,v:161,r:138,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s1.jpg"},
    {dt:"2026-07-01T11:09",cap:null,v:210,r:179,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s2.jpg"},
    {dt:"2026-06-30T14:55",cap:null,v:263,r:210,l:0,c:0,sh:0,i:1,k:0,img:"sbd_s3.jpg"},
@@ -220,7 +223,51 @@ const CLIENTS = [
    {dt:"2026-06-27T15:55",cap:null,v:524,r:395,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s5.jpg"},
    {dt:"2026-06-25T16:02",cap:"Ganhador do cookie 🍪",v:295,r:202,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s6.jpg"},
    {dt:"2026-06-25T16:01",cap:"Segunda ganhadora da salada 🥗",v:325,r:223,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s7.jpg"},
-   {dt:"2026-06-25T14:01",cap:"Primeiro ganhador já veio retirar sua salada !",v:491,r:357,l:4,c:0,sh:1,i:5,k:0,img:"sbd_s8.jpg"}]}
+   {dt:"2026-06-25T14:01",cap:"Primeiro ganhador já veio retirar sua salada !",v:491,r:357,l:4,c:0,sh:1,i:5,k:0,img:"sbd_s8.jpg"},
+   {dt:"2026-06-25T11:00",cap:null,v:143,r:108,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260625-1100_0.jpg"},
+   {dt:"2026-06-25T10:59",cap:null,v:148,r:111,l:0,c:0,sh:0,i:0,k:1,img:"sbd_s_20260625-1059_0.jpg"},
+   {dt:"2026-06-25T10:58",cap:null,v:150,r:115,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260625-1058_0.jpg"},
+   {dt:"2026-06-24T11:37",cap:null,v:198,r:132,l:0,c:0,sh:0,i:1,k:0,img:"sbd_s_20260624-1137_0.jpg"},
+   {dt:"2026-06-24T11:33",cap:null,v:224,r:142,l:0,c:0,sh:0,i:1,k:0,img:"sbd_s_20260624-1133_0.jpg"},
+   {dt:"2026-06-24T11:33",cap:null,v:216,r:141,l:0,c:0,sh:2,i:2,k:0,img:"sbd_s_20260624-1133_1.jpg"},
+   {dt:"2026-06-24T11:25",cap:null,v:192,r:163,l:0,c:0,sh:0,i:0,k:1,img:"sbd_s_20260624-1125_0.jpg"},
+   {dt:"2026-06-24T11:24",cap:null,v:190,r:169,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260624-1124_0.jpg"},
+   {dt:"2026-06-24T11:23",cap:null,v:216,r:182,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260624-1123_0.jpg"},
+   {dt:"2026-06-23T14:37",cap:null,v:171,r:134,l:2,c:0,sh:1,i:3,k:0,img:"sbd_s_20260623-1437_0.jpg"},
+   {dt:"2026-06-23T11:13",cap:null,v:121,r:null,l:0,c:0,sh:0,i:0,k:3,img:"sbd_s_20260623-1113_0.jpg"},
+   {dt:"2026-06-23T11:13",cap:null,v:132,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260623-1113_1.jpg"},
+   {dt:"2026-06-23T11:12",cap:"S A L A D A",v:130,r:101,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260623-1112_0.jpg"},
+   {dt:"2026-06-23T11:11",cap:null,v:133,r:105,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260623-1111_0.jpg"},
+   {dt:"2026-06-22T11:16",cap:null,v:157,r:129,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260622-1116_0.jpg"},
+   {dt:"2026-06-22T11:16",cap:null,v:148,r:131,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260622-1116_1.jpg"},
+   {dt:"2026-06-22T11:15",cap:null,v:156,r:141,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260622-1115_0.jpg"},
+   {dt:"2026-06-20T13:10",cap:"Entrega da nossa ganhadora acabando de sair . 💚 @Ana luiza soares",v:352,r:263,l:1,c:0,sh:2,i:3,k:0,img:"sbd_s_20260620-1310_0.jpg"},
+   {dt:"2026-06-20T11:03",cap:null,v:196,r:143,l:0,c:0,sh:0,i:0,k:2,img:"sbd_s_20260620-1103_0.jpg"},
+   {dt:"2026-06-20T11:01",cap:null,v:199,r:153,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260620-1101_0.jpg"},
+   {dt:"2026-06-19T11:54",cap:null,v:298,r:192,l:1,c:0,sh:1,i:2,k:0,img:"sbd_s_20260619-1154_0.jpg"},
+   {dt:"2026-06-19T11:54",cap:null,v:311,r:198,l:1,c:0,sh:8,i:9,k:0,img:"sbd_s_20260619-1154_1.jpg"},
+   {dt:"2026-06-19T11:29",cap:null,v:163,r:132,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260619-1129_0.jpg"},
+   {dt:"2026-06-19T11:27",cap:null,v:159,r:135,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260619-1127_0.jpg"},
+   {dt:"2026-06-19T11:26",cap:null,v:174,r:146,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260619-1126_0.jpg"},
+   {dt:"2026-06-18T11:13",cap:"SUBWAY SALADAS",v:102,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260618-1113_0.jpg"},
+   {dt:"2026-06-18T11:09",cap:null,v:100,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260618-1109_0.jpg"},
+   {dt:"2026-06-18T11:08",cap:null,v:112,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260618-1108_0.jpg"},
+   {dt:"2026-06-17T20:19",cap:null,v:126,r:null,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260617-2019_0.jpg"},
+   {dt:"2026-06-17T11:50",cap:null,v:104,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260617-1150_0.jpg"},
+   {dt:"2026-06-17T11:49",cap:null,v:101,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260617-1149_0.jpg"},
+   {dt:"2026-06-17T11:49",cap:null,v:100,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260617-1149_1.jpg"},
+   {dt:"2026-06-17T11:48",cap:null,v:114,r:null,l:0,c:0,sh:1,i:1,k:0,img:"sbd_s_20260617-1148_0.jpg"},
+   {dt:"2026-06-17T11:47",cap:null,v:116,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260617-1147_0.jpg"},
+   {dt:"2026-06-16T13:58",cap:null,v:146,r:117,l:0,c:0,sh:0,i:0,k:1,img:"sbd_s_20260616-1358_0.jpg"},
+   {dt:"2026-06-16T13:57",cap:null,v:155,r:128,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260616-1357_0.jpg"},
+   {dt:"2026-06-15T14:47",cap:null,v:165,r:138,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260615-1447_0.jpg"},
+   {dt:"2026-06-15T11:30",cap:null,v:154,r:127,l:2,c:0,sh:0,i:2,k:0,img:"sbd_s_20260615-1130_0.jpg"},
+   {dt:"2026-06-15T11:29",cap:null,v:153,r:129,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260615-1129_0.jpg"},
+   {dt:"2026-06-15T11:28",cap:null,v:178,r:142,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260615-1128_0.jpg"},
+   {dt:"2026-06-11T12:37",cap:"Novo golpe detectado 😅",v:230,r:190,l:3,c:0,sh:0,i:3,k:0,img:"sbd_s_20260611-1237_0.jpg"},
+   {dt:"2026-06-10T12:06",cap:null,v:171,r:134,l:4,c:0,sh:0,i:4,k:0,img:"sbd_s_20260610-1206_0.jpg"},
+   {dt:"2026-06-10T11:32",cap:"Hmmmm aquele Sub 😋",v:163,r:138,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260610-1132_0.jpg"},
+   {dt:"2026-06-10T10:45",cap:null,v:174,r:149,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260610-1045_0.jpg"}]}
 
 ];
 const METRIC_TABS=[["views","Visualizações"],["reach","Alcance"],["interactions","Interações"],["followers","Seguidores +"],["conversations","Conversas"]];
