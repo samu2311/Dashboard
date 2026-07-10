@@ -192,18 +192,18 @@
 
 <script>window.SOLO_ID="sm"</script>
 <script>
-const START = new Date(2026,5,5), NDAYS = 34;
+const START = new Date(2026,5,5), NDAYS = 35;
 const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"sm", name:"SM Odontologia", handle:"@sm.odonto · Divinópolis", c1:"#2ecc8f", c2:"#0ea5e9",
-  followers:7987, gained:115, unfollows:50, conv:16, contacts:2, resp:14.3,
-  splitViews:[16.2,83.8], splitReach:[3.5,96.5], splitInter:[52,48],
-  daily:{views:[5070,4526,4245,7920,6946,6198,5306,4888,1033,341,795,968,2240,9093,9641,7642,5008,7066,3914,1511,1004,628,141,38,415,38,10967,8972,10929,9619,5110,8541,6455,5466],
-  reach:[3319,3299,2942,4180,4165,3887,3555,3122,585,234,306,306,867,6036,6082,5498,3527,4764,2354,613,271,284,56,22,106,16,7257,6170,6135,6126,3648,5157,3666,3504],
-  followers:[4,3,3,6,7,3,4,3,1,2,2,2,1,11,9,9,3,8,1,4,2,2,1,9,1,1,9,11,4,14,3,5,5,0],
-  interactions:[15,18,41,139,48,46,17,23,25,6,16,10,65,27,34,32,23,42,21,33,7,7,0,-1,7,0,42,39,75,34,12,132,83,33],
-  conversations:[1,0,1,3,1,0,1,0,0,0,1,0,2,1,1,0,0,0,2,1,0,1,0,0,1,0,1,0,3,0,0,1,0,0]},
+  followers:7993, gained:118, unfollows:49, conv:16, contacts:3, resp:14.3,
+  splitViews:[16.5,83.5], splitReach:[3.5,96.5], splitInter:[54,46],
+  daily:{views:[5070,4526,4245,7920,6946,6198,5306,4888,1033,341,795,968,2240,9093,9641,7642,5008,7066,3914,1511,1004,628,141,38,415,38,10967,8972,10929,9619,5110,8541,6455,5469,5326],
+  reach:[3319,3299,2942,4180,4165,3887,3555,3122,585,234,306,306,867,6036,6082,5498,3527,4764,2354,613,271,284,56,22,106,16,7257,6170,6135,6126,3648,5157,3666,3504,3154],
+  followers:[4,3,3,6,7,3,4,3,1,2,2,2,1,11,9,9,3,8,1,4,2,2,1,9,1,1,9,11,4,14,3,5,5,7,0],
+  interactions:[15,18,41,139,48,46,17,23,25,6,16,10,65,27,34,32,23,42,21,33,7,7,0,-1,7,0,42,39,75,34,12,132,83,33,69],
+  conversations:[1,0,1,3,1,0,1,0,0,0,1,0,2,1,1,0,0,0,2,1,0,1,0,0,1,0,1,0,3,0,0,1,0,0,1]},
   posts:[
    {d:"2026-06-08",f:"Reel",cap:"A trend era dos jogadores… mas a nossa equipe entrou em campo também 😂",v:2851,r:1718,l:90,cm:9,s:2,sh:7},
    {d:"2026-06-10",f:"Reel",cap:"Sabemos que muitas pessoas chegam com medo ou insegurança…",v:494,r:265,l:9,cm:2,s:0,sh:5,img:"sm_p2.jpg",u:"https://www.instagram.com/reel/DZZyQ8GD0Hc/"},
@@ -211,12 +211,24 @@ const CLIENTS = [
    {d:"2026-06-17",f:"Reel",cap:"A trend é divertida… mas o propósito é sério. Esse é o time que transforma sorrisos.",v:1368,r:null,l:31,cm:3,s:0,sh:6,img:"sm_p4.jpg",u:"https://www.instagram.com/reel/DZsNXOnRozQ/"},
    {d:"2026-06-24",f:"Reel",cap:"Nem só de atendimentos vive a nossa rotina. 😅 Entre cuidado, risadas e boas histórias.",v:1101,r:null,l:23,cm:1,s:0,sh:3,img:"sm_p5.jpg",u:"https://www.instagram.com/reel/DZ-KNezx29e/"},
    {d:"2026-07-06",f:"Reel",cap:"Sonhar é muito bom. Mas ver esse sonho se tornar realidade é ainda mais especial. Há 5 anos, tudo começou com um prop...",v:1545,r:157,l:48,cm:11,s:0,sh:8},
-   {d:"2026-07-07",f:"Reel",cap:"Se existe uma palavra que define esses 5 anos, ela é: gratidão. Gratidão por cada paciente que confiou no nosso traba...",v:745,r:11,l:29,cm:8,s:2,sh:4,img:"sm_p7_0707.jpg",u:"https://www.instagram.com/reel/DafcvSIxPBB/"}],
+   {d:"2026-07-07",f:"Reel",cap:"Se existe uma palavra que define esses 5 anos, ela é: gratidão. Gratidão por cada paciente que confiou no nosso traba...",v:745,r:11,l:29,cm:8,s:2,sh:4,img:"sm_p7_0707.jpg",u:"https://www.instagram.com/reel/DafcvSIxPBB/"},
+   {d:"2026-07-09",f:"Reel",cap:"Esse ano estamos completando 5 anos de SM! Cada colaborador descreveu em 1 palavra porém é muito pouco para descrever...",v:518,r:42,l:20,cm:8,s:0,sh:1,img:"sm_p8_0709.jpg",u:"https://www.instagram.com/reel/Dak5adRhJcZ/"},
+   {d:"2026-07-10",f:"Reel",cap:"5 anos da @sm.odonto e a Minas FM sempre presente. Parabéns!",v:12,r:null,l:0,cm:0,s:0,sh:0},
+   {d:"2026-07-10",f:"Reel",cap:"Sara Monique proprietária da @sm.odonto , fala sobre o relacionamento da clinica com os pacientes.",v:23,r:null,l:3,cm:0,s:0,sh:0},
+   {d:"2026-07-10",f:"Reel",cap:"Minas FM e @sm.odonto é tudo de bom!",v:458,r:null,l:5,cm:0,s:0,sh:1},
+   {d:"2026-07-10",f:"Reel",cap:"Minas FM ao AO VIVO na comemoração dos 5 anos da @sm.odonto . Esperamos por você!",v:740,r:null,l:9,cm:0,s:0,sh:1}],
   stories:[
-   {dt:"2026-07-09T08:44",cap:"BOM DIA ! Uma quinta-feira abençoada e recheada de cuidados .",v:4,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260709-0844_0.jpg"},
-   {dt:"2026-07-08T15:51",cap:null,v:329,r:260,l:5,c:0,sh:1,i:6,k:0,img:"sm_s_20260708-1551_0.jpg"},
-   {dt:"2026-07-08T15:49",cap:null,v:78,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260708-1549_0.jpg"},
-   {dt:"2026-07-08T15:49",cap:null,v:79,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260708-1549_1.jpg"},
+   {dt:"2026-07-10T11:06",cap:null,v:0,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260710-1106_0.jpg"},
+   {dt:"2026-07-10T11:03",cap:null,v:0,r:null,l:0,c:0,sh:0,i:1,k:0,img:"sm_s_20260710-1103_0.jpg"},
+   {dt:"2026-07-10T10:36",cap:null,v:18,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260710-1036_0.jpg"},
+   {dt:"2026-07-09T17:16",cap:null,v:52,r:null,l:1,c:0,sh:0,i:1,k:0,img:"sm_s_20260709-1716_0.jpg"},
+   {dt:"2026-07-09T13:53",cap:null,v:148,r:113,l:2,c:0,sh:1,i:3,k:0,img:"sm_s_20260709-1353_0.jpg"},
+   {dt:"2026-07-09T10:41",cap:null,v:71,r:null,l:4,c:0,sh:0,i:4,k:0,img:"sm_s_20260709-1041_0.jpg"},
+   {dt:"2026-07-09T10:37",cap:null,v:73,r:null,l:4,c:0,sh:0,i:4,k:0,img:"sm_s_20260709-1037_0.jpg"},
+   {dt:"2026-07-09T08:44",cap:"BOM DIA ! Uma quinta-feira abençoada e recheada de cuidados .",v:80,r:null,l:3,c:0,sh:0,i:3,k:0,img:"sm_s_20260709-0844_0.jpg"},
+   {dt:"2026-07-08T15:51",cap:null,v:395,r:308,l:5,c:0,sh:1,i:6,k:0,img:"sm_s_20260708-1551_0.jpg"},
+   {dt:"2026-07-08T15:49",cap:null,v:98,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260708-1549_0.jpg"},
+   {dt:"2026-07-08T15:49",cap:null,v:101,r:null,l:2,c:0,sh:0,i:3,k:0,img:"sm_s_20260708-1549_1.jpg"},
    {dt:"2026-07-08T09:40",cap:"BOM DIA!",v:104,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260708-0940_0.jpg"},
    {dt:"2026-07-07T16:32",cap:null,v:103,r:null,l:0,c:0,sh:0,i:1,k:0,img:"sm_s_20260707-1632_0.jpg"},
    {dt:"2026-07-07T15:07",cap:null,v:88,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260707-1507_0.jpg"},

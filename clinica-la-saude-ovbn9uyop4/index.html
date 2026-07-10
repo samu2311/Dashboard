@@ -192,26 +192,31 @@
 
 <script>window.SOLO_ID="las"</script>
 <script>
-const START = new Date(2026,5,5), NDAYS = 34;
+const START = new Date(2026,5,5), NDAYS = 35;
 const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"las", name:"Clinica La Saúde", handle:"@clinicalasaude", c1:"#60a5fa", c2:"#a78bfa",
-  followers:3378, gained:21, unfollows:24, conv:4, contacts:1, resp:50,
-  splitViews:[55.6,44.4], splitReach:[18.5,81.5], splitInter:[94,6],
-  daily:{views:[373,104,13,1067,318,1332,495,130,321,75,378,248,415,497,420,24,18,194,220,442,309,201,30,6,98,8,144,540,219,24,18,460,220,181],
-  reach:[200,80,7,361,95,539,250,48,180,28,64,57,231,251,155,14,5,44,38,175,47,37,6,2,55,4,58,260,64,17,6,262,64,49],
-  followers:[1,1,2,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,0,0,2,1,0,0,1,1,0,1,2,0,0,1,1,0],
-  interactions:[13,1,0,20,10,59,9,3,19,1,14,14,9,11,23,-1,0,7,6,10,18,12,0,-2,2,0,2,11,2,0,0,12,6,3],
-  conversations:[0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0]},
+  followers:3383, gained:21, unfollows:24, conv:4, contacts:1, resp:33.3,
+  splitViews:[49.6,50.4], splitReach:[14.2,85.8], splitInter:[65,35],
+  daily:{views:[373,104,13,1067,318,1332,495,130,321,75,378,248,415,497,420,24,18,194,220,442,309,201,30,6,98,8,144,540,219,24,18,460,220,181,1685],
+  reach:[200,80,7,361,95,539,250,48,180,28,64,57,231,251,155,14,5,44,38,175,47,37,6,2,55,4,58,260,64,17,6,262,64,49,687],
+  followers:[1,1,2,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,0,0,2,1,0,0,1,1,0,1,2,0,0,1,1,1,0],
+  interactions:[13,1,0,20,10,59,9,3,19,1,14,14,9,11,23,-1,0,7,6,10,18,12,0,-2,2,0,2,11,2,0,0,12,6,3,157],
+  conversations:[0,0,0,1,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0]},
   posts:[
    {d:"2026-06-10",f:"Reel",cap:"Esse time de milhoeees! 💙🤍",v:1235,r:788,l:30,cm:9,s:1,sh:6,img:"las_p1.jpg",u:"https://www.instagram.com/reel/DZZ2_EYuC0i/"},
    {d:"2026-06-13",f:"Reel",cap:"Vaaai Brasil 🇧🇷 Time La Saúde em campo ⚽",v:360,r:228,l:22,cm:1,s:0,sh:0,img:"las_p2.jpg",u:"https://www.instagram.com/reel/DZif7JzyACL/"},
    {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0,img:"las_p3.jpg",u:"https://www.instagram.com/reel/DZxnj8xxedJ/"},
-   {d:"2026-07-09",f:"Reel",cap:"Você talvez não se lembre do seu sorriso em cada lembrança. Mas ele estava lá, em cada foto, em cada abraço, em cada ...",v:267,r:119,l:29,cm:2,s:0,sh:1,img:"las_p4_0709.jpg",u:"https://www.instagram.com/reel/DakijX9ssA4/"}],
+   {d:"2026-07-09",f:"Reel",cap:"Você talvez não se lembre do seu sorriso em cada lembrança. Mas ele estava lá, em cada foto, em cada abraço, em cada ...",v:267,r:119,l:29,cm:2,s:0,sh:1,img:"las_p4_0709.jpg",u:"https://www.instagram.com/reel/DakijX9ssA4/"},
+   {d:"2026-07-09",f:"Reel",cap:"Seu novo sorriso começa nas férias 😉 Um mês especial aqui na la saude, cuide do seu sorriso! Agende sua avaliação 😄",v:361,r:205,l:27,cm:7,s:0,sh:8,img:"las_p5_0709.jpg",u:"https://www.instagram.com/reel/DaloPsOJWff/"}],
   stories:[
-   {dt:"2026-07-09T08:47",cap:null,v:9,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260709-0847_0.jpg"},
-   {dt:"2026-07-08T16:40",cap:null,v:50,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260708-1640_0.jpg"},
+   {dt:"2026-07-10T10:31",cap:null,v:9,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260710-1031_0.jpg"},
+   {dt:"2026-07-10T10:04",cap:"Bom Dia ! Nosso plantão de orto já começou !",v:23,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260710-1004_0.jpg"},
+   {dt:"2026-07-09T13:54",cap:null,v:56,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260709-1354_0.jpg"},
+   {dt:"2026-07-09T10:36",cap:null,v:62,r:null,l:3,c:0,sh:0,i:3,k:0,img:"las_s_20260709-1036_0.jpg"},
+   {dt:"2026-07-09T08:47",cap:null,v:64,r:null,l:5,c:0,sh:0,i:5,k:0,img:"las_s_20260709-0847_0.jpg"},
+   {dt:"2026-07-08T16:40",cap:null,v:79,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260708-1640_0.jpg"},
    {dt:"2026-07-08T09:38",cap:"BOM DIA QUARTA- FEIRA",v:63,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260708-0938_0.jpg"},
    {dt:"2026-07-07T10:57",cap:null,v:39,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260707-1057_0.jpg"},
    {dt:"2026-07-07T10:56",cap:null,v:39,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260707-1056_0.jpg"},
