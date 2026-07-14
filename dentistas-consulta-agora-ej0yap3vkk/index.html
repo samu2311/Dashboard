@@ -192,18 +192,18 @@
 
 <script>window.SOLO_ID="dent"</script>
 <script>
-const START = new Date(2026,5,5), NDAYS = 37;
+const START = new Date(2026,5,5), NDAYS = 39;
 const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"dent", name:"Dentistas Consulta Agora", handle:"@dentistasconsultaragora", c1:"#38bdf8", c2:"#6366f1",
-  followers:7956, gained:57, unfollows:60, conv:29, contacts:5, resp:76.3,
-  splitViews:[52.3,47.7], splitReach:[13.1,86.9], splitInter:[93,7],
-  daily:{views:[156,258,11,1383,757,4228,3541,1782,2183,1670,4427,4633,2869,1820,2082,589,186,705,678,1267,442,1970,678,138,969,181,955,1173,121,192,70,276,662,1645,1380,1233,302],
-  reach:[11,9,6,609,324,2559,2231,763,1256,1000,2570,2447,1351,613,474,324,60,354,414,250,104,1157,221,16,385,72,145,398,75,18,13,20,127,781,585,443,159],
-  followers:[2,1,2,5,5,4,1,3,3,3,3,8,5,4,5,2,1,1,2,1,2,2,0,0,1,2,0,0,1,0,2,3,1,4,4,2,1],
-  interactions:[0,0,0,63,11,30,29,21,14,14,35,55,12,25,41,7,0,11,7,21,5,24,3,0,11,0,2,17,1,1,0,4,16,34,9,26,1],
-  conversations:[1,0,0,0,1,3,1,0,1,0,0,5,0,4,2,0,0,1,0,3,0,5,0,0,1,0,2,0,0,0,0,1,1,4,0,0,0]},
+  followers:7956, gained:53, unfollows:56, conv:29, contacts:5, resp:75,
+  splitViews:[57.5,42.5], splitReach:[15.9,84.1], splitInter:[94,6],
+  daily:{views:[156,258,11,1383,757,4228,3541,1782,2183,1670,4427,4633,2869,1820,2082,589,186,705,678,1267,442,1970,678,138,969,181,955,1173,121,192,70,276,662,1645,1380,1233,302,86,160],
+  reach:[11,9,6,609,324,2559,2231,763,1256,1000,2570,2447,1351,613,474,324,60,354,414,250,104,1157,221,16,385,72,145,398,75,18,13,20,127,781,585,443,159,29,17],
+  followers:[2,1,2,5,5,4,1,3,3,3,3,8,5,4,5,2,1,1,2,1,2,2,0,0,1,2,0,0,1,0,2,3,1,4,4,2,1,2,0],
+  interactions:[0,0,0,63,11,30,29,21,14,14,35,55,12,25,41,7,0,11,7,21,5,24,3,0,11,0,2,17,1,1,0,4,16,34,9,26,1,1,0],
+  conversations:[1,0,0,0,1,3,1,0,1,0,0,5,0,4,2,0,0,1,0,3,0,5,0,0,1,0,2,0,0,0,0,1,1,4,0,0,0,0,0]},
   posts:[
    {d:"2026-06-10",f:"Reel",cap:"Você acha que implante é caro demais? Talvez caro seja continuar adiando sua confiança, seu conforto e sua qualidade ...",v:528,r:362,l:13,cm:0,s:0,sh:2},
    {d:"2026-06-11",f:"Foto",cap:"Entramos no clima da Copa ⚽💚💛 E no meio da torcida, das fotos e dos momentos especiais… sorrir com confiança faz toda...",v:192,r:97,l:3,cm:0,s:0,sh:0,img:"dent_p2_0611.jpg",u:"https://www.instagram.com/p/DZdODyLDJET/"},
@@ -214,7 +214,8 @@ const CLIENTS = [
    {d:"2026-06-19",f:"Reel",cap:"Cada detalhe importa no cuidado com nossos pacientes — preparação e planejamento.",v:914,r:360,l:9,cm:0,s:0,sh:1,img:"dent_p4.jpg",u:"https://www.instagram.com/reel/DZx81hgnA8-/"},
    {d:"2026-06-22",f:"Carrossel",cap:"Já deixou de sorrir por vergonha? Recuperar o sorriso não é só estética.",v:735,r:428,l:7,cm:0,s:0,sh:1,img:"dent_p5.jpg",u:"https://www.instagram.com/p/DZ5HXo1HWOs/"},
    {d:"2026-07-02",f:"Reel",cap:"Nada melhor do que ouvir de quem viveu a transformação! Cada sorriso alinhado.",v:817,r:208,l:13,cm:1,s:0,sh:1,img:"dent_p6.jpg",u:"https://www.instagram.com/reel/DaSzZ_pDGZO/"},
-   {d:"2026-07-08",f:"Reel",cap:"🦷 Se essa cadeira falasse, ela diria… 💭 “Sempre tive medo de dentista.” 💭 “Achei que ia doer.” 💭 “Adiei por anos.” 💭 ...",v:786,r:483,l:18,cm:2,s:1,sh:1,img:"dent_p10_0708.jpg",u:"https://www.instagram.com/reel/DajClTpCG51/"}],
+   {d:"2026-07-08",f:"Reel",cap:"🦷 Se essa cadeira falasse, ela diria… 💭 “Sempre tive medo de dentista.” 💭 “Achei que ia doer.” 💭 “Adiei por anos.” 💭 ...",v:786,r:483,l:18,cm:2,s:1,sh:1,img:"dent_p10_0708.jpg",u:"https://www.instagram.com/reel/DajClTpCG51/"},
+   {d:"2026-07-14",f:"Foto",cap:"🌽🎉 No clima de arraiá, tem um motivo que nunca sai de moda: sorrir! Seja na quadrilha, na festa da família ou naquela...",v:30,r:0,l:0,cm:0,s:0,sh:0,img:"dent_p11_0714.jpg",u:"https://www.instagram.com/p/DaxaLjPn-eZ/"}],
   stories:[
    {dt:"2026-07-11T10:37",cap:"Bom dia, bom dia!! Sabadãoooooooo ☀️",v:159,r:120,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260711-1037_0.jpg"},
    {dt:"2026-07-10T14:27",cap:null,v:96,r:null,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260710-1427_0.jpg"},
