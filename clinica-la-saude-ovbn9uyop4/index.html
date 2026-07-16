@@ -6,15 +6,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insights — Painel de Clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0c0f; --panel:#131519; --card:#17191f; --card2:#1d2027;
-    --line:#262932; --ink:#f2f3f5; --muted:#8a8d95; --dim:#565963;
-    --accent:#ff5c39; --accent-soft:rgba(255,92,57,.14);
-    --pink:#ff2fa0; --purple:#8b5cf6;
-    --up:#2ecc8f; --down:#ff5c6c;
+    /* Na.Mídia — identidade da agência */
+    --bg:#e5e8cf; --panel:#f4f5e8; --card:#f4f5e8; --card2:#eceedb;
+    --line:#d6d9bd; --ink:#1c1a15; --muted:#6b675c; --dim:#928d80;
+    --accent:#ff5e00; --accent-soft:rgba(255,94,0,.14);
+    --pink:#3e39aa; --purple:#3e39aa;
+    --up:#22b871; --down:#d64545;
+    --font-display:'Fredoka','Nunito',system-ui,sans-serif;
   }
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif}
+  h1,h2,h3,h4,.logo .t,.big,.mlabel,.iglink,.nav-item{font-family:var(--font-display)}
   body{background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
   /* ---------- sidebar ---------- */
   aside{width:240px;background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
@@ -25,7 +31,7 @@
   .side-lbl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--dim);padding:12px 10px 6px;text-transform:uppercase}
   .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;border:1px solid transparent}
   .nav-item:hover{background:var(--card);color:var(--ink)}
-  .nav-item.active{background:var(--accent);color:#fff}
+  .nav-item.active{background:var(--accent);color:#f4f5e8}
   .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
   .nav-item .h{font-size:10.5px;font-weight:400;opacity:.75;display:block}
   /* ---------- main ---------- */
@@ -34,13 +40,13 @@
   header h1{font-size:21px;font-weight:700}
   header .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
   .controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:9px;font-size:12.5px;cursor:pointer;font-weight:600}
-  .preset.active{background:var(--accent);border-color:var(--accent);color:#fff}
-  .controls input[type=date]{border:1px solid var(--line);border-radius:9px;padding:6px 8px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:dark}
+  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:999px;font-size:12.5px;cursor:pointer;font-weight:600}
+  .preset.active{background:var(--accent);border-color:var(--accent);color:#f4f5e8}
+  .controls input[type=date]{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:light}
   .range-note{width:100%;text-align:right;font-size:11.5px;color:var(--dim);margin:2px 0 14px}
   /* ---------- cards ---------- */
   .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
   .card h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
   .card h3 .chip{font-size:9.5px;color:var(--dim);font-weight:600;background:var(--card2);padding:2px 7px;border-radius:10px}
   .big{font-size:34px;font-weight:800;letter-spacing:-1px;margin:10px 0 2px}
@@ -56,7 +62,7 @@
   .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
   /* chart */
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
-  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
+  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
   .tab.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
   canvas{width:100%;height:190px;display:block;margin-top:12px}
   /* content cards */
@@ -147,8 +153,8 @@
   .thumb{width:100%;height:130px;object-fit:cover;border-radius:10px;background:var(--card2);display:block}
   .citem .thumb{height:64px;border-radius:8px;margin-top:6px}
   .mthumb{width:100%;max-height:360px;object-fit:cover;border-radius:12px;margin-bottom:14px;background:var(--card2)}
-  .iglink{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff;font-weight:700;font-size:12.5px;padding:9px 16px;border-radius:10px;text-decoration:none;margin-top:14px}
-  .iglink:hover{opacity:.9}
+  .iglink{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#f4f5e8;font-weight:700;font-family:var(--font-display);font-size:12.5px;padding:9px 18px;border-radius:999px;text-decoration:none;margin-top:14px}
+  .iglink:hover{background:#ff7a2e}
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;display:flex;align-items:center;justify-content:center;padding:18px}
   .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:470px;width:100%;max-height:85vh;overflow-y:auto;padding:20px}
   @media(max-width:800px){
@@ -162,7 +168,7 @@
 </head>
 <body>
 <aside>
-  <div class="logo"><div class="mark">IG</div><div class="t">Painel Insights<small>Meta Business Suite</small></div></div>
+  <div class="logo"><img src="media/brand/logo-wordmark-orange.png" alt="Na.Mídia" height="26"><div class="t"><small>Painel de Insights</small></div></div>
   <div class="side-lbl">Visão geral</div>
   <div class="nav-item" data-cid="all"><div class="avatar" style="background:linear-gradient(135deg,#ff5c39,#8b5cf6)">Σ</div>Todos os clientes</div>
   <div class="side-lbl">Perfis</div>
@@ -197,7 +203,7 @@ const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"las", name:"Clinica La Saúde", handle:"@clinicalasaude", c1:"#60a5fa", c2:"#a78bfa",
-  followers:3382, gained:24, unfollows:20, conv:3, contacts:1, resp:50,
+  followers:3383, gained:24, unfollows:20, conv:3, contacts:1, resp:50,
   splitViews:[48.1,51.9], splitReach:[14.0,86.0], splitInter:[56,44],
   daily:{views:[373,104,13,1067,318,1332,495,130,321,75,378,248,415,497,420,24,18,194,220,442,309,201,30,6,98,8,144,540,219,24,18,460,220,181,1685,727,144,39,369,354],
   reach:[200,80,7,361,95,539,250,48,180,28,64,57,231,251,155,14,5,44,38,175,47,37,6,2,55,4,58,260,64,17,6,262,64,49,687,232,53,21,130,62],
@@ -210,12 +216,14 @@ const CLIENTS = [
    {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0,img:"las_p3.jpg",u:"https://www.instagram.com/reel/DZxnj8xxedJ/"},
    {d:"2026-07-09",f:"Reel",cap:"Você talvez não se lembre do seu sorriso em cada lembrança. Mas ele estava lá, em cada foto, em cada abraço, em cada ...",v:267,r:119,l:29,cm:2,s:0,sh:1,img:"las_p4_0709.jpg",u:"https://www.instagram.com/reel/DakijX9ssA4/"},
    {d:"2026-07-09",f:"Reel",cap:"Seu novo sorriso começa nas férias 😉 Um mês especial aqui na la saude, cuide do seu sorriso! Agende sua avaliação 😄",v:361,r:205,l:27,cm:7,s:0,sh:8,img:"las_p5_0709.jpg",u:"https://www.instagram.com/reel/DaloPsOJWff/"},
-   {d:"2026-07-13",f:"Reel",cap:"Seu novo sorriso começa nas férias! As férias são a oportunidade perfeita para dar o primeiro passo em direção ao sor...",v:98,r:73,l:8,cm:0,s:0,sh:0,img:"las_p6_0713.jpg",u:"https://www.instagram.com/reel/Dau5In1J_Ol/"}],
+   {d:"2026-07-13",f:"Reel",cap:"Seu novo sorriso começa nas férias! As férias são a oportunidade perfeita para dar o primeiro passo em direção ao sor...",v:98,r:73,l:8,cm:0,s:0,sh:0,img:"las_p6_0713.jpg",u:"https://www.instagram.com/reel/Dau5In1J_Ol/"},
+   {d:"2026-07-15",f:"Reel",cap:"Como é nome daquela música mesmo ???👀 Talvez você precise dos nossos cuidados😉 Não deixe que o medo te impeça de sorr...",v:442,r:248,l:27,cm:4,s:0,sh:4,img:"las_p7_0715.jpg",u:"https://www.instagram.com/reel/Da0UI-7t_9Z/"}],
   stories:[
-   {dt:"2026-07-15T09:42",cap:null,v:3,r:null,l:0,c:0,sh:0,i:1,k:0,img:"las_s_20260715-0942_0.jpg"},
-   {dt:"2026-07-15T09:15",cap:"BOM DIA ——————— ———————",v:11,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260715-0915_0.jpg"},
-   {dt:"2026-07-14T16:15",cap:null,v:47,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1615_0.jpg"},
-   {dt:"2026-07-14T10:34",cap:null,v:56,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1034_0.jpg"},
+   {dt:"2026-07-15T11:49",cap:null,v:44,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260715-1149_0.jpg"},
+   {dt:"2026-07-15T09:42",cap:null,v:39,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260715-0942_0.jpg"},
+   {dt:"2026-07-15T09:15",cap:"BOM DIA ——————— ———————",v:43,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260715-0915_0.jpg"},
+   {dt:"2026-07-14T16:15",cap:null,v:53,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1615_0.jpg"},
+   {dt:"2026-07-14T10:34",cap:null,v:57,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1034_0.jpg"},
    {dt:"2026-07-14T10:19",cap:null,v:54,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1019_0.jpg"},
    {dt:"2026-07-14T09:30",cap:null,v:48,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260714-0930_0.jpg"},
    {dt:"2026-07-14T09:09",cap:"BOM DIA",v:49,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-0909_0.jpg"},

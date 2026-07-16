@@ -6,15 +6,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insights — Painel de Clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0c0f; --panel:#131519; --card:#17191f; --card2:#1d2027;
-    --line:#262932; --ink:#f2f3f5; --muted:#8a8d95; --dim:#565963;
-    --accent:#ff5c39; --accent-soft:rgba(255,92,57,.14);
-    --pink:#ff2fa0; --purple:#8b5cf6;
-    --up:#2ecc8f; --down:#ff5c6c;
+    /* Na.Mídia — identidade da agência */
+    --bg:#e5e8cf; --panel:#f4f5e8; --card:#f4f5e8; --card2:#eceedb;
+    --line:#d6d9bd; --ink:#1c1a15; --muted:#6b675c; --dim:#928d80;
+    --accent:#ff5e00; --accent-soft:rgba(255,94,0,.14);
+    --pink:#3e39aa; --purple:#3e39aa;
+    --up:#22b871; --down:#d64545;
+    --font-display:'Fredoka','Nunito',system-ui,sans-serif;
   }
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif}
+  h1,h2,h3,h4,.logo .t,.big,.mlabel,.iglink,.nav-item{font-family:var(--font-display)}
   body{background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
   /* ---------- sidebar ---------- */
   aside{width:240px;background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
@@ -25,7 +31,7 @@
   .side-lbl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--dim);padding:12px 10px 6px;text-transform:uppercase}
   .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;border:1px solid transparent}
   .nav-item:hover{background:var(--card);color:var(--ink)}
-  .nav-item.active{background:var(--accent);color:#fff}
+  .nav-item.active{background:var(--accent);color:#f4f5e8}
   .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
   .nav-item .h{font-size:10.5px;font-weight:400;opacity:.75;display:block}
   /* ---------- main ---------- */
@@ -34,13 +40,13 @@
   header h1{font-size:21px;font-weight:700}
   header .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
   .controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:9px;font-size:12.5px;cursor:pointer;font-weight:600}
-  .preset.active{background:var(--accent);border-color:var(--accent);color:#fff}
-  .controls input[type=date]{border:1px solid var(--line);border-radius:9px;padding:6px 8px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:dark}
+  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:999px;font-size:12.5px;cursor:pointer;font-weight:600}
+  .preset.active{background:var(--accent);border-color:var(--accent);color:#f4f5e8}
+  .controls input[type=date]{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:light}
   .range-note{width:100%;text-align:right;font-size:11.5px;color:var(--dim);margin:2px 0 14px}
   /* ---------- cards ---------- */
   .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
   .card h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
   .card h3 .chip{font-size:9.5px;color:var(--dim);font-weight:600;background:var(--card2);padding:2px 7px;border-radius:10px}
   .big{font-size:34px;font-weight:800;letter-spacing:-1px;margin:10px 0 2px}
@@ -56,7 +62,7 @@
   .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
   /* chart */
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
-  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
+  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
   .tab.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
   canvas{width:100%;height:190px;display:block;margin-top:12px}
   /* content cards */
@@ -147,8 +153,8 @@
   .thumb{width:100%;height:130px;object-fit:cover;border-radius:10px;background:var(--card2);display:block}
   .citem .thumb{height:64px;border-radius:8px;margin-top:6px}
   .mthumb{width:100%;max-height:360px;object-fit:cover;border-radius:12px;margin-bottom:14px;background:var(--card2)}
-  .iglink{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff;font-weight:700;font-size:12.5px;padding:9px 16px;border-radius:10px;text-decoration:none;margin-top:14px}
-  .iglink:hover{opacity:.9}
+  .iglink{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#f4f5e8;font-weight:700;font-family:var(--font-display);font-size:12.5px;padding:9px 18px;border-radius:999px;text-decoration:none;margin-top:14px}
+  .iglink:hover{background:#ff7a2e}
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;display:flex;align-items:center;justify-content:center;padding:18px}
   .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:470px;width:100%;max-height:85vh;overflow-y:auto;padding:20px}
   @media(max-width:800px){
@@ -162,7 +168,7 @@
 </head>
 <body>
 <aside>
-  <div class="logo"><div class="mark">IG</div><div class="t">Painel Insights<small>Meta Business Suite</small></div></div>
+  <div class="logo"><img src="media/brand/logo-wordmark-orange.png" alt="Na.Mídia" height="26"><div class="t"><small>Painel de Insights</small></div></div>
   <div class="side-lbl">Visão geral</div>
   <div class="nav-item" data-cid="all"><div class="avatar" style="background:linear-gradient(135deg,#ff5c39,#8b5cf6)">Σ</div>Todos os clientes</div>
   <div class="side-lbl">Perfis</div>
@@ -197,11 +203,11 @@ const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"sbd", name:"Subway Bom Despacho", handle:"@subwaybd", c1:"#22c55e", c2:"#eab308",
-  followers:4230, gained:54, unfollows:49, conv:15, contacts:13, resp:56.3,
+  followers:4228, gained:55, unfollows:52, conv:15, contacts:13, resp:56.3,
   splitViews:[47.9,52.1], splitReach:[21.1,78.9], splitInter:[39,61],
-  daily:{views:[396,279,305,821,257,7253,1302,527,223,151,828,557,3013,1777,1684,990,2825,1450,949,1416,1424,717,665,210,1904,648,384,3136,1221,557,279,905,615,787,985,3576,1102,544,413,2571],
-  reach:[108,138,180,377,141,3428,542,259,107,74,197,221,1001,837,449,228,1444,386,204,238,281,237,353,123,807,373,214,1803,754,317,199,378,390,443,620,1679,627,292,217,1187],
-  followers:[4,2,2,2,2,7,2,2,1,1,1,4,2,2,6,1,4,2,1,1,3,3,1,1,5,5,4,0,1,1,0,2,3,1,0,3,0,2,1,0],
+  daily:{views:[396,279,305,821,257,7253,1302,527,223,151,828,557,3013,1777,1684,990,2825,1450,949,1416,1424,717,665,210,1904,648,384,3136,1221,557,279,905,615,787,985,3576,1102,544,413,2573],
+  reach:[108,138,180,377,141,3428,542,259,107,74,197,221,1001,837,449,228,1444,386,204,238,281,237,353,123,807,373,214,1803,754,317,199,378,390,443,620,1679,627,292,217,1189],
+  followers:[4,2,2,2,2,7,2,2,1,1,1,4,2,2,6,1,4,2,1,1,3,3,1,1,5,5,4,0,1,1,0,2,3,1,0,3,0,2,1,1],
   interactions:[1,1,2,7,0,150,18,13,1,2,9,0,49,18,31,8,51,6,6,7,7,3,4,4,40,4,6,45,18,8,5,3,7,8,8,45,6,7,4,35],
   conversations:[0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,2,0,0,0,2,4,0,1,0,1,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0]},
   posts:[
@@ -216,7 +222,11 @@ const CLIENTS = [
    {d:"2026-07-10",f:"Reel",cap:"Seu reel",v:2805,r:205,l:32,cm:2,s:1,sh:2,img:"sbd_p9_0710.jpg",u:"https://www.instagram.com/reel/DanijRDA_fk/"},
    {d:"2026-07-14",f:"Reel",cap:"Tem sabores que fazem mais do que matar a fome. Chega a arrepiar aquela mordida que te transporta direto para um mome...",v:2246,r:152,l:29,cm:2,s:2,sh:1,img:"sbd_p10_0714.jpg",u:"https://www.instagram.com/reel/DayPYuWNgE8/"}],
   stories:[
-   {dt:"2026-07-14T16:27",cap:null,v:117,r:103,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260714-1627_0.jpg"},
+   {dt:"2026-07-15T11:30",cap:null,v:97,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1130_0.jpg"},
+   {dt:"2026-07-15T11:30",cap:"Seu story",v:0,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1130_1.jpg"},
+   {dt:"2026-07-15T10:50",cap:null,v:120,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1050_0.jpg"},
+   {dt:"2026-07-15T10:50",cap:"Seu story",v:0,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1050_1.jpg"},
+   {dt:"2026-07-14T16:27",cap:null,v:149,r:129,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260714-1627_0.jpg"},
    {dt:"2026-07-11T16:44",cap:null,v:236,r:210,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260711-1644_0.jpg"},
    {dt:"2026-07-10T12:45",cap:null,v:217,r:188,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260710-1245_0.jpg"},
    {dt:"2026-07-10T12:41",cap:null,v:226,r:199,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260710-1241_0.jpg"},

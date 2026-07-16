@@ -6,15 +6,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insights — Painel de Clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0c0f; --panel:#131519; --card:#17191f; --card2:#1d2027;
-    --line:#262932; --ink:#f2f3f5; --muted:#8a8d95; --dim:#565963;
-    --accent:#ff5c39; --accent-soft:rgba(255,92,57,.14);
-    --pink:#ff2fa0; --purple:#8b5cf6;
-    --up:#2ecc8f; --down:#ff5c6c;
+    /* Na.Mídia — identidade da agência */
+    --bg:#e5e8cf; --panel:#f4f5e8; --card:#f4f5e8; --card2:#eceedb;
+    --line:#d6d9bd; --ink:#1c1a15; --muted:#6b675c; --dim:#928d80;
+    --accent:#ff5e00; --accent-soft:rgba(255,94,0,.14);
+    --pink:#3e39aa; --purple:#3e39aa;
+    --up:#22b871; --down:#d64545;
+    --font-display:'Fredoka','Nunito',system-ui,sans-serif;
   }
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif}
+  h1,h2,h3,h4,.logo .t,.big,.mlabel,.iglink,.nav-item{font-family:var(--font-display)}
   body{background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
   /* ---------- sidebar ---------- */
   aside{width:240px;background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
@@ -25,7 +31,7 @@
   .side-lbl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--dim);padding:12px 10px 6px;text-transform:uppercase}
   .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;border:1px solid transparent}
   .nav-item:hover{background:var(--card);color:var(--ink)}
-  .nav-item.active{background:var(--accent);color:#fff}
+  .nav-item.active{background:var(--accent);color:#f4f5e8}
   .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
   .nav-item .h{font-size:10.5px;font-weight:400;opacity:.75;display:block}
   /* ---------- main ---------- */
@@ -34,13 +40,13 @@
   header h1{font-size:21px;font-weight:700}
   header .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
   .controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:9px;font-size:12.5px;cursor:pointer;font-weight:600}
-  .preset.active{background:var(--accent);border-color:var(--accent);color:#fff}
-  .controls input[type=date]{border:1px solid var(--line);border-radius:9px;padding:6px 8px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:dark}
+  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:999px;font-size:12.5px;cursor:pointer;font-weight:600}
+  .preset.active{background:var(--accent);border-color:var(--accent);color:#f4f5e8}
+  .controls input[type=date]{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:light}
   .range-note{width:100%;text-align:right;font-size:11.5px;color:var(--dim);margin:2px 0 14px}
   /* ---------- cards ---------- */
   .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
   .card h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
   .card h3 .chip{font-size:9.5px;color:var(--dim);font-weight:600;background:var(--card2);padding:2px 7px;border-radius:10px}
   .big{font-size:34px;font-weight:800;letter-spacing:-1px;margin:10px 0 2px}
@@ -56,7 +62,7 @@
   .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
   /* chart */
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
-  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
+  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
   .tab.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
   canvas{width:100%;height:190px;display:block;margin-top:12px}
   /* content cards */
@@ -147,8 +153,8 @@
   .thumb{width:100%;height:130px;object-fit:cover;border-radius:10px;background:var(--card2);display:block}
   .citem .thumb{height:64px;border-radius:8px;margin-top:6px}
   .mthumb{width:100%;max-height:360px;object-fit:cover;border-radius:12px;margin-bottom:14px;background:var(--card2)}
-  .iglink{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff;font-weight:700;font-size:12.5px;padding:9px 16px;border-radius:10px;text-decoration:none;margin-top:14px}
-  .iglink:hover{opacity:.9}
+  .iglink{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#f4f5e8;font-weight:700;font-family:var(--font-display);font-size:12.5px;padding:9px 18px;border-radius:999px;text-decoration:none;margin-top:14px}
+  .iglink:hover{background:#ff7a2e}
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;display:flex;align-items:center;justify-content:center;padding:18px}
   .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:470px;width:100%;max-height:85vh;overflow-y:auto;padding:20px}
   @media(max-width:800px){
@@ -162,7 +168,7 @@
 </head>
 <body>
 <aside>
-  <div class="logo"><div class="mark">IG</div><div class="t">Painel Insights<small>Meta Business Suite</small></div></div>
+  <div class="logo"><img src="media/brand/logo-wordmark-orange.png" alt="Na.Mídia" height="26"><div class="t"><small>Painel de Insights</small></div></div>
   <div class="side-lbl">Visão geral</div>
   <div class="nav-item" data-cid="all"><div class="avatar" style="background:linear-gradient(135deg,#ff5c39,#8b5cf6)">Σ</div>Todos os clientes</div>
   <div class="side-lbl">Perfis</div>
@@ -197,11 +203,11 @@ const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"fb", name:"Friends Bar Kitchen", handle:"@friends_barkitchen", c1:"#ff5c39", c2:"#ffb03a",
-  followers:20970, gained:387, unfollows:344, conv:98, contacts:56, resp:88.2,
+  followers:20967, gained:396, unfollows:358, conv:98, contacts:56, resp:88.2,
   splitViews:[57.6,42.4], splitReach:[24.7,75.3], splitInter:[68,32],
   daily:{views:[18413,19278,12794,10313,10981,11409,13151,10977,10510,5851,4146,6681,6152,7691,12989,10843,4956,3368,5558,10591,6340,7033,11938,10011,10396,4109,5011,5659,6735,6924,12597,5373,3537,5719,6222,6938,10460,7236,4424,3348],
   reach:[5692,6057,4291,2980,3720,3538,3854,2674,2652,2063,2584,2859,2467,3023,3299,2298,2354,1588,1362,2450,1236,1510,2552,1591,2341,1404,2225,2437,1732,1735,1450,1472,1370,1982,2276,2202,2570,1789,1205,1164],
-  followers:[21,27,16,22,20,26,16,19,19,19,15,15,10,10,14,15,10,15,8,17,12,16,18,17,16,12,17,17,12,24,14,17,6,12,16,9,26,19,8,0],
+  followers:[21,27,16,22,20,26,16,19,19,19,15,15,10,10,14,15,10,15,8,17,12,16,18,17,16,12,17,17,12,24,14,17,6,12,16,9,26,19,8,9],
   interactions:[85,87,36,65,61,55,58,41,28,11,26,33,40,69,116,27,10,7,30,61,10,25,47,38,64,14,27,25,32,36,23,6,8,20,21,24,36,12,9,10],
   conversations:[5,7,2,6,2,3,1,3,11,1,3,5,4,3,9,6,2,0,1,6,2,0,7,3,10,1,1,6,2,7,3,1,4,4,4,3,3,4,2,0]},
   posts:[
@@ -213,6 +219,11 @@ const CLIENTS = [
    {d:"2026-06-27",f:"Carrossel",cap:"Se tem jogo do Brasil... tem experiência completa aqui no Friends! Telão funcionando e a galera certa.",v:3260,r:null,l:11,cm:2,s:0,sh:5,img:"fb_p5.jpg",u:"https://www.instagram.com/p/DaF6XkJkW77/"},
    {d:"2026-06-29",f:"Foto",cap:"Hoje tem jogo. E aqui já é festa antes da bola rolar. Almoço servido, ambiente pronto.",v:3561,r:null,l:25,cm:1,s:0,sh:5,img:"fb_p6.jpg",u:"https://www.instagram.com/p/DaK4ehmxyTs/"}],
   stories:[
+   {dt:"2026-07-15T12:02",cap:null,v:284,r:224,l:1,c:0,sh:1,i:2,k:0,img:"fb_s_20260715-1202_0.jpg"},
+   {dt:"2026-07-15T12:02",cap:null,v:604,r:438,l:0,c:0,sh:3,i:3,k:0,img:"fb_s_20260715-1202_1.jpg"},
+   {dt:"2026-07-15T12:02",cap:null,v:222,r:160,l:0,c:0,sh:0,i:0,k:0,img:"fb_s_20260715-1202_2.jpg"},
+   {dt:"2026-07-15T12:01",cap:null,v:220,r:168,l:0,c:0,sh:0,i:0,k:0,img:"fb_s_20260715-1201_0.jpg"},
+   {dt:"2026-07-15T12:01",cap:null,v:220,r:183,l:1,c:0,sh:0,i:2,k:0,img:"fb_s_20260715-1201_1.jpg"},
    {dt:"2026-07-12T21:36",cap:null,v:551,r:424,l:2,c:0,sh:2,i:4,k:0,img:"fb_s_20260712-2136_0.jpg"},
    {dt:"2026-07-12T20:30",cap:null,v:450,r:349,l:1,c:0,sh:0,i:1,k:0,img:"fb_s_20260712-2030_0.jpg"},
    {dt:"2026-07-12T20:30",cap:null,v:463,r:377,l:1,c:0,sh:0,i:1,k:0,img:"fb_s_20260712-2030_1.jpg"},

@@ -6,15 +6,21 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Insights — Painel de Clientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0b0c0f; --panel:#131519; --card:#17191f; --card2:#1d2027;
-    --line:#262932; --ink:#f2f3f5; --muted:#8a8d95; --dim:#565963;
-    --accent:#ff5c39; --accent-soft:rgba(255,92,57,.14);
-    --pink:#ff2fa0; --purple:#8b5cf6;
-    --up:#2ecc8f; --down:#ff5c6c;
+    /* Na.Mídia — identidade da agência */
+    --bg:#e5e8cf; --panel:#f4f5e8; --card:#f4f5e8; --card2:#eceedb;
+    --line:#d6d9bd; --ink:#1c1a15; --muted:#6b675c; --dim:#928d80;
+    --accent:#ff5e00; --accent-soft:rgba(255,94,0,.14);
+    --pink:#3e39aa; --purple:#3e39aa;
+    --up:#22b871; --down:#d64545;
+    --font-display:'Fredoka','Nunito',system-ui,sans-serif;
   }
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif}
+  h1,h2,h3,h4,.logo .t,.big,.mlabel,.iglink,.nav-item{font-family:var(--font-display)}
   body{background:var(--bg);color:var(--ink);display:flex;min-height:100vh}
   /* ---------- sidebar ---------- */
   aside{width:240px;background:var(--panel);border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto;flex-shrink:0}
@@ -25,7 +31,7 @@
   .side-lbl{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--dim);padding:12px 10px 6px;text-transform:uppercase}
   .nav-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;border:1px solid transparent}
   .nav-item:hover{background:var(--card);color:var(--ink)}
-  .nav-item.active{background:var(--accent);color:#fff}
+  .nav-item.active{background:var(--accent);color:#f4f5e8}
   .avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
   .nav-item .h{font-size:10.5px;font-weight:400;opacity:.75;display:block}
   /* ---------- main ---------- */
@@ -34,13 +40,13 @@
   header h1{font-size:21px;font-weight:700}
   header .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
   .controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:9px;font-size:12.5px;cursor:pointer;font-weight:600}
-  .preset.active{background:var(--accent);border-color:var(--accent);color:#fff}
-  .controls input[type=date]{border:1px solid var(--line);border-radius:9px;padding:6px 8px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:dark}
+  .preset{border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:999px;font-size:12.5px;cursor:pointer;font-weight:600}
+  .preset.active{background:var(--accent);border-color:var(--accent);color:#f4f5e8}
+  .controls input[type=date]{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:var(--card);color:var(--ink);color-scheme:light}
   .range-note{width:100%;text-align:right;font-size:11.5px;color:var(--dim);margin:2px 0 14px}
   /* ---------- cards ---------- */
   .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
   .card h3{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
   .card h3 .chip{font-size:9.5px;color:var(--dim);font-weight:600;background:var(--card2);padding:2px 7px;border-radius:10px}
   .big{font-size:34px;font-weight:800;letter-spacing:-1px;margin:10px 0 2px}
@@ -56,7 +62,7 @@
   .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}
   /* chart */
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
-  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:8px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
+  .tab{font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card2);color:var(--muted);cursor:pointer;border:1px solid transparent}
   .tab.active{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
   canvas{width:100%;height:190px;display:block;margin-top:12px}
   /* content cards */
@@ -147,8 +153,8 @@
   .thumb{width:100%;height:130px;object-fit:cover;border-radius:10px;background:var(--card2);display:block}
   .citem .thumb{height:64px;border-radius:8px;margin-top:6px}
   .mthumb{width:100%;max-height:360px;object-fit:cover;border-radius:12px;margin-bottom:14px;background:var(--card2)}
-  .iglink{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff;font-weight:700;font-size:12.5px;padding:9px 16px;border-radius:10px;text-decoration:none;margin-top:14px}
-  .iglink:hover{opacity:.9}
+  .iglink{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#f4f5e8;font-weight:700;font-family:var(--font-display);font-size:12.5px;padding:9px 18px;border-radius:999px;text-decoration:none;margin-top:14px}
+  .iglink:hover{background:#ff7a2e}
   .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;display:flex;align-items:center;justify-content:center;padding:18px}
   .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:470px;width:100%;max-height:85vh;overflow-y:auto;padding:20px}
   @media(max-width:800px){
@@ -162,7 +168,7 @@
 </head>
 <body>
 <aside>
-  <div class="logo"><div class="mark">IG</div><div class="t">Painel Insights<small>Meta Business Suite</small></div></div>
+  <div class="logo"><img src="media/brand/logo-wordmark-orange.png" alt="Na.Mídia" height="26"><div class="t"><small>Painel de Insights</small></div></div>
   <div class="side-lbl">Visão geral</div>
   <div class="nav-item" data-cid="all"><div class="avatar" style="background:linear-gradient(135deg,#ff5c39,#8b5cf6)">Σ</div>Todos os clientes</div>
   <div class="side-lbl">Perfis</div>
@@ -196,11 +202,11 @@ const MEDIA = '../media/';
 const mediaImg=(o,cls)=>o.img?`<img class="${cls}" src="${MEDIA}${o.img}" loading="lazy" onerror="this.remove()">`:'';
 const CLIENTS = [
  {id:"fb", name:"Friends Bar Kitchen", handle:"@friends_barkitchen", c1:"#ff5c39", c2:"#ffb03a",
-  followers:20970, gained:387, unfollows:344, conv:98, contacts:56, resp:88.2,
+  followers:20967, gained:396, unfollows:358, conv:98, contacts:56, resp:88.2,
   splitViews:[57.6,42.4], splitReach:[24.7,75.3], splitInter:[68,32],
   daily:{views:[18413,19278,12794,10313,10981,11409,13151,10977,10510,5851,4146,6681,6152,7691,12989,10843,4956,3368,5558,10591,6340,7033,11938,10011,10396,4109,5011,5659,6735,6924,12597,5373,3537,5719,6222,6938,10460,7236,4424,3348],
   reach:[5692,6057,4291,2980,3720,3538,3854,2674,2652,2063,2584,2859,2467,3023,3299,2298,2354,1588,1362,2450,1236,1510,2552,1591,2341,1404,2225,2437,1732,1735,1450,1472,1370,1982,2276,2202,2570,1789,1205,1164],
-  followers:[21,27,16,22,20,26,16,19,19,19,15,15,10,10,14,15,10,15,8,17,12,16,18,17,16,12,17,17,12,24,14,17,6,12,16,9,26,19,8,0],
+  followers:[21,27,16,22,20,26,16,19,19,19,15,15,10,10,14,15,10,15,8,17,12,16,18,17,16,12,17,17,12,24,14,17,6,12,16,9,26,19,8,9],
   interactions:[85,87,36,65,61,55,58,41,28,11,26,33,40,69,116,27,10,7,30,61,10,25,47,38,64,14,27,25,32,36,23,6,8,20,21,24,36,12,9,10],
   conversations:[5,7,2,6,2,3,1,3,11,1,3,5,4,3,9,6,2,0,1,6,2,0,7,3,10,1,1,6,2,7,3,1,4,4,4,3,3,4,2,0]},
   posts:[
@@ -212,6 +218,11 @@ const CLIENTS = [
    {d:"2026-06-27",f:"Carrossel",cap:"Se tem jogo do Brasil... tem experiência completa aqui no Friends! Telão funcionando e a galera certa.",v:3260,r:null,l:11,cm:2,s:0,sh:5,img:"fb_p5.jpg",u:"https://www.instagram.com/p/DaF6XkJkW77/"},
    {d:"2026-06-29",f:"Foto",cap:"Hoje tem jogo. E aqui já é festa antes da bola rolar. Almoço servido, ambiente pronto.",v:3561,r:null,l:25,cm:1,s:0,sh:5,img:"fb_p6.jpg",u:"https://www.instagram.com/p/DaK4ehmxyTs/"}],
   stories:[
+   {dt:"2026-07-15T12:02",cap:null,v:284,r:224,l:1,c:0,sh:1,i:2,k:0,img:"fb_s_20260715-1202_0.jpg"},
+   {dt:"2026-07-15T12:02",cap:null,v:604,r:438,l:0,c:0,sh:3,i:3,k:0,img:"fb_s_20260715-1202_1.jpg"},
+   {dt:"2026-07-15T12:02",cap:null,v:222,r:160,l:0,c:0,sh:0,i:0,k:0,img:"fb_s_20260715-1202_2.jpg"},
+   {dt:"2026-07-15T12:01",cap:null,v:220,r:168,l:0,c:0,sh:0,i:0,k:0,img:"fb_s_20260715-1201_0.jpg"},
+   {dt:"2026-07-15T12:01",cap:null,v:220,r:183,l:1,c:0,sh:0,i:2,k:0,img:"fb_s_20260715-1201_1.jpg"},
    {dt:"2026-07-12T21:36",cap:null,v:551,r:424,l:2,c:0,sh:2,i:4,k:0,img:"fb_s_20260712-2136_0.jpg"},
    {dt:"2026-07-12T20:30",cap:null,v:450,r:349,l:1,c:0,sh:0,i:1,k:0,img:"fb_s_20260712-2030_0.jpg"},
    {dt:"2026-07-12T20:30",cap:null,v:463,r:377,l:1,c:0,sh:0,i:1,k:0,img:"fb_s_20260712-2030_1.jpg"},
@@ -472,13 +483,15 @@ const CLIENTS = [
    {d:"2026-06-22",f:"Carrossel",cap:"Já deixou de sorrir por vergonha? Recuperar o sorriso não é só estética.",v:735,r:428,l:7,cm:0,s:0,sh:1,img:"dent_p5.jpg",u:"https://www.instagram.com/p/DZ5HXo1HWOs/"},
    {d:"2026-07-02",f:"Reel",cap:"Nada melhor do que ouvir de quem viveu a transformação! Cada sorriso alinhado.",v:817,r:208,l:13,cm:1,s:0,sh:1,img:"dent_p6.jpg",u:"https://www.instagram.com/reel/DaSzZ_pDGZO/"},
    {d:"2026-07-08",f:"Reel",cap:"🦷 Se essa cadeira falasse, ela diria… 💭 “Sempre tive medo de dentista.” 💭 “Achei que ia doer.” 💭 “Adiei por anos.” 💭 ...",v:786,r:483,l:18,cm:2,s:1,sh:1,img:"dent_p10_0708.jpg",u:"https://www.instagram.com/reel/DajClTpCG51/"},
-   {d:"2026-07-14",f:"Foto",cap:"🌽🎉 No clima de arraiá, tem um motivo que nunca sai de moda: sorrir! Seja na quadrilha, na festa da família ou naquela...",v:30,r:0,l:0,cm:0,s:0,sh:0,img:"dent_p11_0714.jpg",u:"https://www.instagram.com/p/DaxaLjPn-eZ/"}],
+   {d:"2026-07-14",f:"Foto",cap:"🌽🎉 No clima de arraiá, tem um motivo que nunca sai de moda: sorrir! Seja na quadrilha, na festa da família ou naquela...",v:30,r:0,l:0,cm:0,s:0,sh:0,img:"dent_p11_0714.jpg",u:"https://www.instagram.com/p/DaxaLjPn-eZ/"},
+   {d:"2026-07-15",f:"Reel",cap:"✨ Se você sonha em transformar o seu sorriso com alinhadores invisíveis, essa é a oportunidade perfeita para dar o pr...",v:2258,r:2,l:9,cm:0,s:0,sh:1,img:"dent_p12_0715.jpg",u:"https://www.instagram.com/reel/Da09RtTDtzf/"}],
   stories:[
-   {dt:"2026-07-14T15:44",cap:null,v:85,r:null,l:0,c:0,sh:0,i:0,k:0,img:"dent_s_20260714-1544_0.jpg"},
-   {dt:"2026-07-14T13:50",cap:null,v:92,r:null,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260714-1350_0.jpg"},
-   {dt:"2026-07-14T13:50",cap:null,v:105,r:null,l:2,c:0,sh:0,i:2,k:0,img:"dent_s_20260714-1350_1.jpg"},
-   {dt:"2026-07-14T13:50",cap:null,v:126,r:100,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260714-1350_2.jpg"},
-   {dt:"2026-07-14T09:50",cap:"Bom dia, bom dia!! Nós comemoramos juntos Esse é nosso propósito!!!",v:239,r:185,l:2,c:0,sh:0,i:2,k:0,img:"dent_s_20260714-0950_0.jpg"},
+   {dt:"2026-07-15T18:14",cap:null,v:59,r:null,l:0,c:0,sh:0,i:0,k:0,img:"dent_s_20260715-1814_0.jpg"},
+   {dt:"2026-07-14T15:44",cap:null,v:97,r:null,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260714-1544_0.jpg"},
+   {dt:"2026-07-14T13:50",cap:null,v:100,r:null,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260714-1350_0.jpg"},
+   {dt:"2026-07-14T13:50",cap:null,v:112,r:null,l:2,c:0,sh:0,i:2,k:0,img:"dent_s_20260714-1350_1.jpg"},
+   {dt:"2026-07-14T13:50",cap:null,v:131,r:105,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260714-1350_2.jpg"},
+   {dt:"2026-07-14T09:50",cap:"Bom dia, bom dia!! Nós comemoramos juntos Esse é nosso propósito!!!",v:239,r:186,l:2,c:0,sh:0,i:2,k:0,img:"dent_s_20260714-0950_0.jpg"},
    {dt:"2026-07-11T10:37",cap:"Bom dia, bom dia!! Sabadãoooooooo ☀️",v:159,r:120,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260711-1037_0.jpg"},
    {dt:"2026-07-10T14:27",cap:null,v:96,r:null,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260710-1427_0.jpg"},
    {dt:"2026-07-10T14:27",cap:null,v:111,r:null,l:0,c:0,sh:0,i:0,k:0,img:"dent_s_20260710-1427_1.jpg"},
@@ -555,11 +568,11 @@ const CLIENTS = [
    {dt:"2026-06-10T11:23",cap:null,v:94,r:null,l:1,c:0,sh:0,i:1,k:0,img:"dent_s_20260610-1123_0.jpg"},
    {dt:"2026-06-10T10:31",cap:null,v:106,r:null,l:2,c:0,sh:0,i:2,k:0,img:"dent_s_20260610-1031_0.jpg"}]},
  {id:"sm", name:"SM Odontologia", handle:"@sm.odonto · Divinópolis", c1:"#2ecc8f", c2:"#0ea5e9",
-  followers:8009, gained:136, unfollows:45, conv:18, contacts:3, resp:9.1,
+  followers:8011, gained:137, unfollows:46, conv:18, contacts:3, resp:9.1,
   splitViews:[15.2,84.8], splitReach:[3.4,96.6], splitInter:[51,49],
   daily:{views:[5070,4526,4245,7920,6946,6198,5306,4888,1033,341,795,968,2240,9093,9641,7642,5008,7066,3914,1511,1004,628,141,38,415,38,10967,8972,10929,9619,5110,8542,6455,5469,5326,19628,8360,6226,2075,2010],
   reach:[3319,3299,2942,4180,4165,3887,3555,3122,585,234,306,306,867,6036,6082,5498,3527,4764,2354,613,271,284,56,22,106,16,7257,6170,6135,6126,3648,5157,3666,3504,3154,3702,3607,3345,415,579],
-  followers:[4,3,3,6,7,3,4,3,1,2,2,2,1,11,9,9,3,8,1,4,2,2,1,9,1,1,9,11,4,14,3,5,5,7,5,9,5,6,1,0],
+  followers:[4,3,3,6,7,3,4,3,1,2,2,2,1,11,9,9,3,8,1,4,2,2,1,9,1,1,9,11,4,14,3,5,5,7,5,9,5,6,1,1],
   interactions:[15,18,41,139,48,46,17,23,25,6,16,10,65,27,34,32,23,42,21,33,7,7,0,-1,7,0,42,39,75,34,12,132,83,33,69,237,40,28,32,69],
   conversations:[1,0,1,3,1,0,1,0,0,0,1,0,2,1,1,0,0,0,2,1,0,1,0,0,1,0,1,0,3,0,0,1,0,0,1,3,0,0,0,0]},
   posts:[
@@ -577,16 +590,17 @@ const CLIENTS = [
    {d:"2026-07-10",f:"Reel",cap:"Minas FM ao AO VIVO na comemoração dos 5 anos da @sm.odonto . Esperamos por você!",v:740,r:null,l:9,cm:0,s:0,sh:1},
    {d:"2026-07-14",f:"Reel",cap:"Algumas histórias são construídas todos os dias. Há 4 anos e meio, ela escolheu fazer parte da SM Odontologia. Desde ...",v:134,r:0,l:3,cm:0,s:0,sh:0,img:"sm_p13_0714.jpg",u:"https://www.instagram.com/reel/DaxZ5XeR5Au/"}],
   stories:[
-   {dt:"2026-07-15T09:19",cap:null,v:7,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260715-0919_0.jpg"},
-   {dt:"2026-07-15T09:19",cap:"MÊS ESPECIAL 5 Anos criando motivos para sorrir",v:7,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260715-0919_1.jpg"},
-   {dt:"2026-07-15T09:17",cap:"BOM DIA",v:9,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260715-0917_0.jpg"},
-   {dt:"2026-07-14T10:33",cap:null,v:343,r:267,l:3,c:0,sh:1,i:4,k:0,img:"sm_s_20260714-1033_0.jpg"},
+   {dt:"2026-07-15T11:31",cap:null,v:49,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260715-1131_0.jpg"},
+   {dt:"2026-07-15T09:19",cap:null,v:60,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260715-0919_0.jpg"},
+   {dt:"2026-07-15T09:19",cap:"MÊS ESPECIAL 5 Anos criando motivos para sorrir",v:64,r:null,l:4,c:0,sh:0,i:4,k:0,img:"sm_s_20260715-0919_1.jpg"},
+   {dt:"2026-07-15T09:17",cap:"BOM DIA",v:154,r:115,l:2,c:0,sh:1,i:3,k:0,img:"sm_s_20260715-0917_0.jpg"},
+   {dt:"2026-07-14T10:33",cap:null,v:360,r:284,l:3,c:0,sh:1,i:4,k:0,img:"sm_s_20260714-1033_0.jpg"},
    {dt:"2026-07-14T09:08",cap:null,v:82,r:null,l:3,c:0,sh:0,i:3,k:0,img:"sm_s_20260714-0908_0.jpg"},
    {dt:"2026-07-14T08:38",cap:"BOM DIA Iniciando um + um dia repleto de cuidados",v:87,r:null,l:4,c:0,sh:0,i:4,k:0,img:"sm_s_20260714-0838_0.jpg"},
    {dt:"2026-07-13T17:05",cap:null,v:87,r:null,l:1,c:0,sh:0,i:1,k:0,img:"sm_s_20260713-1705_0.jpg"},
    {dt:"2026-07-13T16:07",cap:null,v:91,r:null,l:2,c:0,sh:0,i:2,k:0,img:"sm_s_20260713-1607_0.jpg"},
    {dt:"2026-07-13T16:07",cap:null,v:94,r:null,l:3,c:0,sh:0,i:3,k:0,img:"sm_s_20260713-1607_1.jpg"},
-   {dt:"2026-07-13T09:29",cap:"Seu story",v:336,r:256,l:2,c:0,sh:1,i:3,k:0,img:"sm_s_20260713-0929_0.jpg"},
+   {dt:"2026-07-13T09:29",cap:"Seu story",v:345,r:261,l:2,c:0,sh:1,i:3,k:0,img:"sm_s_20260713-0929_0.jpg"},
    {dt:"2026-07-13T09:29",cap:null,v:345,r:261,l:2,c:0,sh:1,i:3,k:0,img:"sm_s_20260713-0929_1.jpg"},
    {dt:"2026-07-13T08:24",cap:"Aniversário SM MÊS ESPECIAL",v:380,r:286,l:6,c:0,sh:1,i:7,k:0,img:"sm_s_20260713-0824_0.jpg"},
    {dt:"2026-07-13T08:00",cap:"BOM DIA Uma semana abençoada para todos !!",v:132,r:106,l:4,c:0,sh:0,i:4,k:0,img:"sm_s_20260713-0800_0.jpg"},
@@ -697,7 +711,7 @@ const CLIENTS = [
    {dt:"2026-06-10T11:54",cap:"Preparando mais uma placa de clareamento para transformar sorrisos",v:100,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260610-1154_1.jpg"},
    {dt:"2026-06-10T08:39",cap:"BOM DIA Uma quarta cheia de cuidados por aqui !",v:98,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sm_s_20260610-0839_0.jpg"}]},
  {id:"las", name:"Clinica La Saúde", handle:"@clinicalasaude", c1:"#60a5fa", c2:"#a78bfa",
-  followers:3382, gained:24, unfollows:20, conv:3, contacts:1, resp:50,
+  followers:3383, gained:24, unfollows:20, conv:3, contacts:1, resp:50,
   splitViews:[48.1,51.9], splitReach:[14.0,86.0], splitInter:[56,44],
   daily:{views:[373,104,13,1067,318,1332,495,130,321,75,378,248,415,497,420,24,18,194,220,442,309,201,30,6,98,8,144,540,219,24,18,460,220,181,1685,727,144,39,369,354],
   reach:[200,80,7,361,95,539,250,48,180,28,64,57,231,251,155,14,5,44,38,175,47,37,6,2,55,4,58,260,64,17,6,262,64,49,687,232,53,21,130,62],
@@ -710,12 +724,14 @@ const CLIENTS = [
    {d:"2026-06-19",f:"Reel",cap:"Por trás de cada cirurgia, existe muito mais do que técnica.",v:197,r:105,l:10,cm:2,s:0,sh:0,img:"las_p3.jpg",u:"https://www.instagram.com/reel/DZxnj8xxedJ/"},
    {d:"2026-07-09",f:"Reel",cap:"Você talvez não se lembre do seu sorriso em cada lembrança. Mas ele estava lá, em cada foto, em cada abraço, em cada ...",v:267,r:119,l:29,cm:2,s:0,sh:1,img:"las_p4_0709.jpg",u:"https://www.instagram.com/reel/DakijX9ssA4/"},
    {d:"2026-07-09",f:"Reel",cap:"Seu novo sorriso começa nas férias 😉 Um mês especial aqui na la saude, cuide do seu sorriso! Agende sua avaliação 😄",v:361,r:205,l:27,cm:7,s:0,sh:8,img:"las_p5_0709.jpg",u:"https://www.instagram.com/reel/DaloPsOJWff/"},
-   {d:"2026-07-13",f:"Reel",cap:"Seu novo sorriso começa nas férias! As férias são a oportunidade perfeita para dar o primeiro passo em direção ao sor...",v:98,r:73,l:8,cm:0,s:0,sh:0,img:"las_p6_0713.jpg",u:"https://www.instagram.com/reel/Dau5In1J_Ol/"}],
+   {d:"2026-07-13",f:"Reel",cap:"Seu novo sorriso começa nas férias! As férias são a oportunidade perfeita para dar o primeiro passo em direção ao sor...",v:98,r:73,l:8,cm:0,s:0,sh:0,img:"las_p6_0713.jpg",u:"https://www.instagram.com/reel/Dau5In1J_Ol/"},
+   {d:"2026-07-15",f:"Reel",cap:"Como é nome daquela música mesmo ???👀 Talvez você precise dos nossos cuidados😉 Não deixe que o medo te impeça de sorr...",v:442,r:248,l:27,cm:4,s:0,sh:4,img:"las_p7_0715.jpg",u:"https://www.instagram.com/reel/Da0UI-7t_9Z/"}],
   stories:[
-   {dt:"2026-07-15T09:42",cap:null,v:3,r:null,l:0,c:0,sh:0,i:1,k:0,img:"las_s_20260715-0942_0.jpg"},
-   {dt:"2026-07-15T09:15",cap:"BOM DIA ——————— ———————",v:11,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260715-0915_0.jpg"},
-   {dt:"2026-07-14T16:15",cap:null,v:47,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1615_0.jpg"},
-   {dt:"2026-07-14T10:34",cap:null,v:56,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1034_0.jpg"},
+   {dt:"2026-07-15T11:49",cap:null,v:44,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260715-1149_0.jpg"},
+   {dt:"2026-07-15T09:42",cap:null,v:39,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260715-0942_0.jpg"},
+   {dt:"2026-07-15T09:15",cap:"BOM DIA ——————— ———————",v:43,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260715-0915_0.jpg"},
+   {dt:"2026-07-14T16:15",cap:null,v:53,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1615_0.jpg"},
+   {dt:"2026-07-14T10:34",cap:null,v:57,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1034_0.jpg"},
    {dt:"2026-07-14T10:19",cap:null,v:54,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-1019_0.jpg"},
    {dt:"2026-07-14T09:30",cap:null,v:48,r:null,l:1,c:0,sh:0,i:1,k:0,img:"las_s_20260714-0930_0.jpg"},
    {dt:"2026-07-14T09:09",cap:"BOM DIA",v:49,r:null,l:2,c:0,sh:0,i:2,k:0,img:"las_s_20260714-0909_0.jpg"},
@@ -795,11 +811,11 @@ const CLIENTS = [
    {dt:"2026-06-10T10:42",cap:null,v:60,r:null,l:3,c:0,sh:0,i:3,k:0,img:"las_s_20260610-1042_0.jpg"},
    {dt:"2026-06-10T08:42",cap:null,v:52,r:null,l:3,c:0,sh:0,i:3,k:0,img:"las_s_20260610-0842_0.jpg"}]},
  {id:"sbd", name:"Subway Bom Despacho", handle:"@subwaybd", c1:"#22c55e", c2:"#eab308",
-  followers:4230, gained:54, unfollows:49, conv:15, contacts:13, resp:56.3,
+  followers:4228, gained:55, unfollows:52, conv:15, contacts:13, resp:56.3,
   splitViews:[47.9,52.1], splitReach:[21.1,78.9], splitInter:[39,61],
-  daily:{views:[396,279,305,821,257,7253,1302,527,223,151,828,557,3013,1777,1684,990,2825,1450,949,1416,1424,717,665,210,1904,648,384,3136,1221,557,279,905,615,787,985,3576,1102,544,413,2571],
-  reach:[108,138,180,377,141,3428,542,259,107,74,197,221,1001,837,449,228,1444,386,204,238,281,237,353,123,807,373,214,1803,754,317,199,378,390,443,620,1679,627,292,217,1187],
-  followers:[4,2,2,2,2,7,2,2,1,1,1,4,2,2,6,1,4,2,1,1,3,3,1,1,5,5,4,0,1,1,0,2,3,1,0,3,0,2,1,0],
+  daily:{views:[396,279,305,821,257,7253,1302,527,223,151,828,557,3013,1777,1684,990,2825,1450,949,1416,1424,717,665,210,1904,648,384,3136,1221,557,279,905,615,787,985,3576,1102,544,413,2573],
+  reach:[108,138,180,377,141,3428,542,259,107,74,197,221,1001,837,449,228,1444,386,204,238,281,237,353,123,807,373,214,1803,754,317,199,378,390,443,620,1679,627,292,217,1189],
+  followers:[4,2,2,2,2,7,2,2,1,1,1,4,2,2,6,1,4,2,1,1,3,3,1,1,5,5,4,0,1,1,0,2,3,1,0,3,0,2,1,1],
   interactions:[1,1,2,7,0,150,18,13,1,2,9,0,49,18,31,8,51,6,6,7,7,3,4,4,40,4,6,45,18,8,5,3,7,8,8,45,6,7,4,35],
   conversations:[0,0,0,0,0,0,0,0,1,0,0,0,1,0,1,2,0,0,0,2,4,0,1,0,1,2,0,0,0,0,0,1,0,0,0,0,0,0,0,0]},
   posts:[
@@ -814,7 +830,11 @@ const CLIENTS = [
    {d:"2026-07-10",f:"Reel",cap:"Seu reel",v:2805,r:205,l:32,cm:2,s:1,sh:2,img:"sbd_p9_0710.jpg",u:"https://www.instagram.com/reel/DanijRDA_fk/"},
    {d:"2026-07-14",f:"Reel",cap:"Tem sabores que fazem mais do que matar a fome. Chega a arrepiar aquela mordida que te transporta direto para um mome...",v:2246,r:152,l:29,cm:2,s:2,sh:1,img:"sbd_p10_0714.jpg",u:"https://www.instagram.com/reel/DayPYuWNgE8/"}],
   stories:[
-   {dt:"2026-07-14T16:27",cap:null,v:117,r:103,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260714-1627_0.jpg"},
+   {dt:"2026-07-15T11:30",cap:null,v:97,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1130_0.jpg"},
+   {dt:"2026-07-15T11:30",cap:"Seu story",v:0,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1130_1.jpg"},
+   {dt:"2026-07-15T10:50",cap:null,v:120,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1050_0.jpg"},
+   {dt:"2026-07-15T10:50",cap:"Seu story",v:0,r:null,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260715-1050_1.jpg"},
+   {dt:"2026-07-14T16:27",cap:null,v:149,r:129,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260714-1627_0.jpg"},
    {dt:"2026-07-11T16:44",cap:null,v:236,r:210,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260711-1644_0.jpg"},
    {dt:"2026-07-10T12:45",cap:null,v:217,r:188,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260710-1245_0.jpg"},
    {dt:"2026-07-10T12:41",cap:null,v:226,r:199,l:0,c:0,sh:0,i:0,k:0,img:"sbd_s_20260710-1241_0.jpg"},
@@ -877,7 +897,7 @@ const CLIENTS = [
    {dt:"2026-06-10T11:32",cap:"Hmmmm aquele Sub 😋",v:163,r:138,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260610-1132_0.jpg"},
    {dt:"2026-06-10T10:45",cap:null,v:174,r:149,l:1,c:0,sh:0,i:1,k:0,img:"sbd_s_20260610-1045_0.jpg"}]},
  {id:"sit", name:"Subway Itaúna", handle:"@subwayitauna", c1:"#facc15", c2:"#22c55e",
-  followers:2784, gained:47, unfollows:35, conv:8, contacts:7, resp:0,
+  followers:2785, gained:47, unfollows:35, conv:8, contacts:7, resp:0,
   splitViews:[70.2,29.8], splitReach:[50.6,49.4], splitInter:[85,15],
   daily:{views:[559,536,474,848,155,668,719,225,173,80,1459,598,472,622,556,273,115,509,486,351,938,212,86,85,67,540,335,169,88,21,49,447,196,539,219,426,69,16,80,529],
   reach:[89,95,108,230,98,132,103,90,56,24,313,189,143,110,133,111,58,118,115,94,264,48,18,25,12,181,171,121,27,8,8,280,121,146,50,135,31,6,13,170],
